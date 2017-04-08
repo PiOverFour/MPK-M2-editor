@@ -497,7 +497,6 @@ class Ui_MainWindow(object):
                 pad["padNoteSpinBox"].setValue(note // 12 - 1)
                 pad["padPCSpinBox"].setValue(config[27 + b_i*4*8 + 1 + pad_i*4])
                 pad["padCCSpinBox"].setValue(config[27 + b_i*4*8 + 2 + pad_i*4])
-                # pad_type = "Toggle" if config[27 + b_i*4*8 + 3 + pad_i*4] else "Momentary"
                 pad["padTypeComboBox"].setCurrentIndex(config[27 + b_i*4*8 + 3 + pad_i*4])
 
     def retranslateUi(self, MainWindow):
@@ -572,8 +571,8 @@ class Ui_MainWindow(object):
                 for pa_i, pad in enumerate(bank["pads"]):
                     pad["padGroupBox"].setTitle(_translate("MainWindow", "Pad %s"%(pa_i+1)))
                     pad["padCCLabel"].setText(_translate("MainWindow", "CC"))
-                    pad["padTypeComboBox"].setItemText(0, _translate("MainWindow", "Toggle"))
-                    pad["padTypeComboBox"].setItemText(1, _translate("MainWindow", "Momentary"))
+                    pad["padTypeComboBox"].setItemText(0, _translate("MainWindow", "Momentary"))
+                    pad["padTypeComboBox"].setItemText(1, _translate("MainWindow", "Toggle"))
                     pad["padNoteLabel"].setText(_translate("MainWindow", "Note"))
                     pad["padNoteComboBox"].setItemText(0, _translate("MainWindow", "C"))
                     pad["padNoteComboBox"].setItemText(1, _translate("MainWindow", "C#"))
