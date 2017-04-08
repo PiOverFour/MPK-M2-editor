@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/qt_ui_simple.ui'
-#
-# Created by: PyQt5 UI code generator 5.8.2
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1032, 764)
+        # MainWindow.resize(1032, 764)
         font = QtGui.QFont()
         font.setFamily("DejaVu Sans")
         font.setPointSize(8)
@@ -27,9 +21,13 @@ class Ui_MainWindow(object):
         self.options.setObjectName("options")
         self.getAllPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.getAllPushButton.setObjectName("getAllPushButton")
+        self.getAllPushButton.clicked.connect(self.get_all_programmes)
+
         self.options.addWidget(self.getAllPushButton, 0, 1, 1, 1)
         self.getCurrentPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.getCurrentPushButton.setObjectName("getCurrentPushButton")
+        self.getCurrentPushButton.clicked.connect(self.get_active_programme)
+
         self.options.addWidget(self.getCurrentPushButton, 0, 0, 1, 1)
         self.sendCurrentPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.sendCurrentPushButton.setObjectName("sendCurrentPushButton")
@@ -45,6 +43,7 @@ class Ui_MainWindow(object):
         self.programmes.setEnabled(True)
         self.programmes.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.programmes.setObjectName("programmes")
+
         # Programmes
         self.progs = []
         for prog_i in range(1, 5):
@@ -71,14 +70,14 @@ class Ui_MainWindow(object):
                 knob["knobGridLayout"].setContentsMargins(0, 0, 0, 0)
                 knob["knobGridLayout"].setSpacing(0)
                 knob["knobGridLayout"].setObjectName("knobGridLayout")
-                knob["knobMinSpinBox"] = QtWidgets.QSpinBox(knob["knobGroupBox"])
-                knob["knobMinSpinBox"].setMaximum(127)
-                knob["knobMinSpinBox"].setObjectName("knobMinSpinBox")
-                knob["knobGridLayout"].addWidget(knob["knobMinSpinBox"], 1, 1, 1, 1)
                 knob["knobCCSpinBox"] = QtWidgets.QSpinBox(knob["knobGroupBox"])
                 knob["knobCCSpinBox"].setMaximum(127)
                 knob["knobCCSpinBox"].setObjectName("knobCCSpinBox")
                 knob["knobGridLayout"].addWidget(knob["knobCCSpinBox"], 0, 1, 1, 1)
+                knob["knobMinSpinBox"] = QtWidgets.QSpinBox(knob["knobGroupBox"])
+                knob["knobMinSpinBox"].setMaximum(127)
+                knob["knobMinSpinBox"].setObjectName("knobMinSpinBox")
+                knob["knobGridLayout"].addWidget(knob["knobMinSpinBox"], 1, 1, 1, 1)
                 knob["knobMinLabel"] = QtWidgets.QLabel(knob["knobGroupBox"])
                 knob["knobMinLabel"].setObjectName("knobMinLabel")
                 knob["knobGridLayout"].addWidget(knob["knobMinLabel"], 1, 0, 1, 1)
@@ -369,33 +368,11 @@ class Ui_MainWindow(object):
                     pad["gridLayout_43"].setContentsMargins(0, 0, 0, 0)
                     pad["gridLayout_43"].setSpacing(0)
                     pad["gridLayout_43"].setObjectName("gridLayout_43")
-                    pad["padCCLayout"] = QtWidgets.QHBoxLayout()
-                    pad["padCCLayout"].setObjectName("padCCLayout")
-                    pad["padCCLabel"] = QtWidgets.QLabel(pad["padGroupBox"])
-                    pad["padCCLabel"].setObjectName("padCCLabel")
-                    pad["padCCLayout"].addWidget(pad["padCCLabel"])
-                    pad["padCCSpinBox"] = QtWidgets.QSpinBox(pad["padGroupBox"])
-                    pad["padCCSpinBox"].setMaximum(127)
-                    pad["padCCSpinBox"].setProperty("value", 0)
-                    pad["padCCSpinBox"].setObjectName("padCCSpinBox")
-                    pad["padCCLayout"].addWidget(pad["padCCSpinBox"])
-                    pad["gridLayout_43"].addLayout(pad["padCCLayout"], 2, 0, 1, 1)
-                    pad["padTypeComboBox"] = QtWidgets.QComboBox(pad["padGroupBox"])
-                    pad["padTypeComboBox"].setObjectName("padTypeComboBox")
-                    pad["padTypeComboBox"].addItem("")
-                    pad["padTypeComboBox"].addItem("")
-                    pad["gridLayout_43"].addWidget(pad["padTypeComboBox"], 4, 0, 1, 1)
                     pad["padNoteLayout"] = QtWidgets.QHBoxLayout()
                     pad["padNoteLayout"].setObjectName("padNoteLayout")
                     pad["padNoteLabel"] = QtWidgets.QLabel(pad["padGroupBox"])
                     pad["padNoteLabel"].setObjectName("padNoteLabel")
                     pad["padNoteLayout"].addWidget(pad["padNoteLabel"])
-                    pad["padNoteSpinBox"] = QtWidgets.QSpinBox(pad["padGroupBox"])
-                    pad["padNoteSpinBox"].setMinimum(-1)
-                    pad["padNoteSpinBox"].setMaximum(9)
-                    pad["padNoteSpinBox"].setProperty("value", 4)
-                    pad["padNoteSpinBox"].setObjectName("padNoteSpinBox")
-                    pad["padNoteLayout"].addWidget(pad["padNoteSpinBox"])
                     pad["padNoteComboBox"] = QtWidgets.QComboBox(pad["padGroupBox"])
                     pad["padNoteComboBox"].setObjectName("padNoteComboBox")
                     pad["padNoteComboBox"].addItem("")
@@ -409,19 +386,26 @@ class Ui_MainWindow(object):
                     pad["padNoteComboBox"].addItem("")
                     pad["padNoteComboBox"].addItem("")
                     pad["padNoteComboBox"].addItem("")
+                    pad["padNoteComboBox"].addItem("")
                     pad["padNoteLayout"].addWidget(pad["padNoteComboBox"])
+                    pad["padNoteSpinBox"] = QtWidgets.QSpinBox(pad["padGroupBox"])
+                    pad["padNoteSpinBox"].setMinimum(-1)
+                    pad["padNoteSpinBox"].setMaximum(9)
+                    pad["padNoteSpinBox"].setProperty("value", 4)
+                    pad["padNoteSpinBox"].setObjectName("padNoteSpinBox")
+                    pad["padNoteLayout"].addWidget(pad["padNoteSpinBox"])
                     pad["gridLayout_43"].addLayout(pad["padNoteLayout"], 0, 0, 1, 1)
-                    pad["padMIDILayout"] = QtWidgets.QHBoxLayout()
-                    pad["padMIDILayout"].setObjectName("padMIDILayout")
-                    pad["padMIDILabel"] = QtWidgets.QLabel(pad["padGroupBox"])
-                    pad["padMIDILabel"].setObjectName("padMIDILabel")
-                    pad["padMIDILayout"].addWidget(pad["padMIDILabel"])
-                    pad["padMIDISpinBox"] = QtWidgets.QSpinBox(pad["padGroupBox"])
-                    pad["padMIDISpinBox"].setMaximum(127)
-                    pad["padMIDISpinBox"].setProperty("value", 0)
-                    pad["padMIDISpinBox"].setObjectName("padMIDISpinBox")
-                    pad["padMIDILayout"].addWidget(pad["padMIDISpinBox"])
-                    pad["gridLayout_43"].addLayout(pad["padMIDILayout"], 1, 0, 1, 1)
+                    pad["padCCLayout"] = QtWidgets.QHBoxLayout()
+                    pad["padCCLayout"].setObjectName("padCCLayout")
+                    pad["padCCLabel"] = QtWidgets.QLabel(pad["padGroupBox"])
+                    pad["padCCLabel"].setObjectName("padCCLabel")
+                    pad["padCCLayout"].addWidget(pad["padCCLabel"])
+                    pad["padCCSpinBox"] = QtWidgets.QSpinBox(pad["padGroupBox"])
+                    pad["padCCSpinBox"].setMaximum(127)
+                    pad["padCCSpinBox"].setProperty("value", 0)
+                    pad["padCCSpinBox"].setObjectName("padCCSpinBox")
+                    pad["padCCLayout"].addWidget(pad["padCCSpinBox"])
+                    pad["gridLayout_43"].addLayout(pad["padCCLayout"], 2, 0, 1, 1)
                     pad["padPCLayout"] = QtWidgets.QHBoxLayout()
                     pad["padPCLayout"].setObjectName("padPCLayout")
                     pad["padPCLabel"] = QtWidgets.QLabel(pad["padGroupBox"])
@@ -433,9 +417,14 @@ class Ui_MainWindow(object):
                     pad["padPCSpinBox"].setObjectName("padPCSpinBox")
                     pad["padPCLayout"].addWidget(pad["padPCSpinBox"])
                     pad["gridLayout_43"].addLayout(pad["padPCLayout"], 3, 0, 1, 1)
-                    bank["gridLayout_6"].addWidget(pad["padGroupBox"], pad_i/4+1, pad_i%4, 1, 1)
+                    pad["padTypeComboBox"] = QtWidgets.QComboBox(pad["padGroupBox"])
+                    pad["padTypeComboBox"].setObjectName("padTypeComboBox")
+                    pad["padTypeComboBox"].addItem("")
+                    pad["padTypeComboBox"].addItem("")
+                    pad["gridLayout_43"].addWidget(pad["padTypeComboBox"], 4, 0, 1, 1)
+                    bank["gridLayout_6"].addWidget(pad["padGroupBox"], 1-(pad_i//4), pad_i % 4, 1, 1)
                     bank["pads"].append(pad)
-                prog["gridLayout_2"].addWidget(bank["bankGroupBox"], bank_i%2, 0, 1, 1) # 2, 0, 1, 1)
+                prog["gridLayout_2"].addWidget(bank["bankGroupBox"], bank_i%2, 0, 1, 1)
                 prog["banks"].append(bank)
             self.programmes.addTab(prog["prog1"], "")
             self.progs.append(prog)
@@ -470,6 +459,29 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.programmes.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def get_active_tab_index(self):
+        return self.programmes.currentIndex()
+
+    def fill_active_tab(self, config):
+        p_i = config[7]-1
+        # for i, k in enumerate(self.midi_config.keys()):
+        prog = self.progs[p_i]
+        for k_i, knob in enumerate(prog["knobs"]):
+            knob["knobCCSpinBox"].setValue(config[91 + k_i*3])
+            knob["knobMinSpinBox"].setValue(config[91 + 1 + k_i*3])
+            knob["knobMaxSpinBox"].setValue(config[91 + 2 + k_i*3])
+
+        for b_i, bank in enumerate(prog["banks"]):
+            for pad_i, pad in enumerate(bank["pads"]):
+                note = config[27 + b_i*4*8 + pad_i*4]
+                print(note)
+                pad["padNoteComboBox"].setCurrentIndex(note % 12)
+                pad["padNoteSpinBox"].setValue(note // 12 - 1)
+                pad["padPCSpinBox"].setValue(config[27 + b_i*4*8 + 1 + pad_i*4])
+                pad["padCCSpinBox"].setValue(config[27 + b_i*4*8 + 2 + pad_i*4])
+                # pad_type = "Toggle" if config[27 + b_i*4*8 + 3 + pad_i*4] else "Momentary"
+                pad["padTypeComboBox"].setCurrentIndex(config[27 + b_i*4*8 + 3 + pad_i*4])
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -528,7 +540,7 @@ class Ui_MainWindow(object):
             prog["tempoTapsLabel"].setText(_translate("MainWindow", "Tempo taps"))
             prog["clockLabel"].setText(_translate("MainWindow", "Clock"))
             prog["clockComboBox"].setItemText(0, _translate("MainWindow", "Internal"))
-            prog["clockComboBox"].setItemText(1, _translate("MainWindow", "Eternal"))
+            prog["clockComboBox"].setItemText(1, _translate("MainWindow", "External"))
             prog["arpCheckBox"].setToolTip(_translate("MainWindow", "<html><head/><body><p>Activate arpeggiator</p></body></html>"))
             prog["arpCheckBox"].setText(_translate("MainWindow", "ON/OFF"))
             prog["channelsGroupBox"].setTitle(_translate("MainWindow", "Channels"))
@@ -538,9 +550,10 @@ class Ui_MainWindow(object):
             prog["transposeLabel"].setText(_translate("MainWindow", "Transpose"))
             prog["octaveLabel"].setText(_translate("MainWindow", "Octave"))
             for b_i, bank in enumerate(prog["banks"]):
-                bank["bankGroupBox"].setTitle(_translate("MainWindow", "Bank A"))
+                bank_name = "Bank B" if b_i else "Bank A"
+                bank["bankGroupBox"].setTitle(_translate("MainWindow", bank_name))
                 for pa_i, pad in enumerate(bank["pads"]):
-                    pad["padGroupBox"].setTitle(_translate("MainWindow", "Pad 5"))
+                    pad["padGroupBox"].setTitle(_translate("MainWindow", "Pad %s"%(pa_i+1)))
                     pad["padCCLabel"].setText(_translate("MainWindow", "CC"))
                     pad["padTypeComboBox"].setItemText(0, _translate("MainWindow", "Toggle"))
                     pad["padTypeComboBox"].setItemText(1, _translate("MainWindow", "Momentary"))
@@ -555,8 +568,8 @@ class Ui_MainWindow(object):
                     pad["padNoteComboBox"].setItemText(7, _translate("MainWindow", "G"))
                     pad["padNoteComboBox"].setItemText(8, _translate("MainWindow", "G#"))
                     pad["padNoteComboBox"].setItemText(9, _translate("MainWindow", "A"))
-                    pad["padNoteComboBox"].setItemText(10, _translate("MainWindow", "B"))
-                    pad["padMIDILabel"].setText(_translate("MainWindow", "MIDI"))
+                    pad["padNoteComboBox"].setItemText(10, _translate("MainWindow", "A#"))
+                    pad["padNoteComboBox"].setItemText(11, _translate("MainWindow", "B"))
                     pad["padPCLabel"].setText(_translate("MainWindow", "PC"))
             self.programmes.setTabText(self.programmes.indexOf(prog["prog1"]), _translate("MainWindow", "PROG %s"%(p_i+1)))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
