@@ -21,11 +21,11 @@
 ## get programmes
 ## send programmes
 ##     single
-#     all
+##     all
 # get ram
 # send ram
 # interface
-#     tabs for progs
+##     tabs for progs
 #     autofill
 # load/save config
 #     single program
@@ -47,8 +47,6 @@ from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui.qt_ui import Ui_MainWindow
 
-# [240, 71, 0, 38, 102, 0, 1, 1, 247]
-
 
 class Akai_MPK_Mini(Ui_MainWindow):
 
@@ -60,7 +58,7 @@ class Akai_MPK_Mini(Ui_MainWindow):
             ("sysex_1", 71),  # [71]
             ("sysex_2", 0),  # [0]
             ("sysex_3", 38),  # [38]
-            ("sysex_4", 103),  # [103]
+            ("sysex_4", 103),  # [103] send 100
             ("sysex_5", 0),  # [0]
             ("sysex_6", 109),  # [109]
 
@@ -85,8 +83,8 @@ class Akai_MPK_Mini(Ui_MainWindow):
             #    then the second one is in [30,127]
             # if the first one is 1
             #    then the second one is in [0,112] (128,240)
-            ("arp_tempo", 0),  # 0 [0,1]
-            ("arp_tempo", 79),  # 1 [30,127; 0,112]
+            ("arp_tempo_0", 0),  # 0 [0,1]
+            ("arp_tempo_1", 79),  # 1 [30,127; 0,112]
 
             ("arp_octave", 1),  # [0,3]
 
@@ -220,14 +218,35 @@ class Akai_MPK_Mini(Ui_MainWindow):
 
     def midi_setup(self):
         self.mo = rtmidi.MidiOut()
-        try:
-            self.mo.open_port(1)
-        except RuntimeError:
+        self.mi = rtmidi.MidiIn()
+
+        is_out_open, is_in_open = False, False
+        for i, p in enumerate(self.mo.get_ports()):
+            if "MPKmini" in p:
+                self.mo.open_port(1)
+        for i, p in enumerate(self.mi.get_ports()):
+            if "MPKmini" in p:
+                self.mi.open_port(1)
+                self.mi.ignore_types(sysex=False)
+
+        if not is_out_open and is_in_open:
             print("Please connect controller")
             sys.exit()
-        self.mi = rtmidi.MidiIn()
-        self.mi.open_port(1)
-        self.mi.ignore_types(sysex=False)
+
+    def send_midi_message(self, out_message, expected_len=117):
+        in_message = [[]]
+        # print('out:', out_message)
+        self.mo.send_message(out_message)
+        time.sleep(0.05)
+        i = 0
+        while (in_message is None or len(in_message[0]) != expected_len) and i < 10:
+            in_message = self.mi.get_message()
+            # print('in:', in_message)
+            i += 1
+        if in_message is not None:
+            in_message = in_message[0]  # strip midi time
+        return in_message
+
 
     def get_all_programmes(self):
         for p_i in range(1, 5):
@@ -238,24 +257,36 @@ class Akai_MPK_Mini(Ui_MainWindow):
         self.get_programme(p_i)
 
     def get_programme(self, p_i):
-        print(p_i)
-        message = [[]]
         self.GET_CONFIG[7] = p_i
-        self.mo.send_message(self.GET_CONFIG)
-        time.sleep(0.05)
-        while message is None or len(message[0]) != 117:
-            message = self.mi.get_message()
-        message = message[0]  # strip midi time
-        print(message)
-        self.fill_active_tab(message)
+        in_message = self.send_midi_message(self.GET_CONFIG, 117)
+        # in_message = [[]]
+        # self.mo.send_message(self.GET_CONFIG)
+        # time.sleep(0.05)
+        # while in_message is None or len(in_message[0]) != 117:
+        #     in_message = self.mi.get_message()
+        # in_message = in_message[0]  # strip midi time
+        # print(in_message)
+        self.fill_active_tab(in_message)
 
+    def send_all_programmes(self):
+        for p_i in range(4):
+            self.send_programme(p_i)
 
-        # self.progs[0]["knobs"][0]["knobCCSpinBox"].setValue(20)
+    def send_active_programme(self):
+        p_i = self.get_active_tab_index()
+        self.send_programme(p_i)
+
+    def send_programme(self, p_i):
+        message = self.get_tab_programme(p_i)
+        message[4] = 100
+        self.send_midi_message(message)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Akai_MPK_Mini()
+    # pprint(list(enumerate(ui.midi_config.keys())))
     ui.setupUi(MainWindow)
     MainWindow.show()
     ui.get_all_programmes()

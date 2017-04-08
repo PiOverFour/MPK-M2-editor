@@ -36,22 +36,27 @@ class Ui_MainWindow(object):
         self.options.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
         self.options.setContentsMargins(1, 5, 5, 5)
         self.options.setObjectName("options")
+
         self.getAllPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.getAllPushButton.setObjectName("getAllPushButton")
         self.getAllPushButton.clicked.connect(self.get_all_programmes)
-
         self.options.addWidget(self.getAllPushButton, 0, 1, 1, 1)
+
         self.getCurrentPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.getCurrentPushButton.setObjectName("getCurrentPushButton")
         self.getCurrentPushButton.clicked.connect(self.get_active_programme)
-
         self.options.addWidget(self.getCurrentPushButton, 0, 0, 1, 1)
+
         self.sendCurrentPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.sendCurrentPushButton.setObjectName("sendCurrentPushButton")
+        self.sendCurrentPushButton.clicked.connect(self.send_active_programme)
         self.options.addWidget(self.sendCurrentPushButton, 1, 0, 1, 1)
+
         self.sendAllPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.sendAllPushButton.setObjectName("sendAllPushButton")
+        self.sendAllPushButton.clicked.connect(self.send_all_programmes)
         self.options.addWidget(self.sendAllPushButton, 1, 1, 1, 1)
+
         self.liveUpdateCheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.liveUpdateCheckBox.setObjectName("liveUpdateCheckBox")
         self.options.addWidget(self.liveUpdateCheckBox, 0, 2, 1, 1)
@@ -135,7 +140,7 @@ class Ui_MainWindow(object):
             prog["jsXAxisComboBox"].addItem("")
             prog["jsXAxisLayout_2"].addWidget(prog["jsXAxisComboBox"])
             prog["jsXLeftWidget"] = QtWidgets.QWidget(prog["joystickLayout"])
-            prog["jsXLeftWidget"].setEnabled(False)
+            # prog["jsXLeftWidget"].setEnabled(False)
             prog["jsXLeftWidget"].setObjectName("jsXLeftWidget")
             prog["gridLayout_3"] = QtWidgets.QGridLayout(prog["jsXLeftWidget"])
             prog["gridLayout_3"].setContentsMargins(0, 0, 0, 0)
@@ -177,7 +182,7 @@ class Ui_MainWindow(object):
             prog["jsYAxisComboBox"].addItem("")
             prog["jsYAxisLayout_2"].addWidget(prog["jsYAxisComboBox"])
             prog["jsYWidget"] = QtWidgets.QWidget(prog["joystickLayout"])
-            prog["jsYWidget"].setEnabled(False)
+            # prog["jsYWidget"].setEnabled(False)
             prog["jsYWidget"].setObjectName("jsYWidget")
             prog["gridLayout_7"] = QtWidgets.QGridLayout(prog["jsYWidget"])
             prog["gridLayout_7"].setContentsMargins(0, 0, 0, 0)
@@ -301,14 +306,8 @@ class Ui_MainWindow(object):
             prog["clockComboBox"].addItem("")
             prog["clockLayout"].addWidget(prog["clockComboBox"])
             prog["verticalLayout_3"].addLayout(prog["clockLayout"])
-            # prog["latchLayout"] = QtWidgets.QHBoxLayout()
-            # prog["latchLayout"].setObjectName("latchLayout")
-            # prog["latchLabel"] = QtWidgets.QLabel(prog["arpegGroupBox"])
-            # prog["latchLabel"].setObjectName("latchLabel")
-            # prog["latchLayout"].addWidget(prog["latchLabel"])
             prog["latchCheckBox"] = QtWidgets.QCheckBox(prog["arpegGroupBox"])
             prog["latchCheckBox"].setObjectName("latchCheckBox")
-            # prog["latchLayout"].addWidget(prog["latchCheckBox"])
             prog["verticalLayout_3"].addWidget(prog["latchCheckBox"])
             prog["arpCheckBox"] = QtWidgets.QCheckBox(prog["arpegGroupBox"])
             prog["arpCheckBox"].setObjectName("arpCheckBox")
@@ -498,7 +497,7 @@ class Ui_MainWindow(object):
 
         # arp
         prog["tempoSpinBox"].setValue(config[18]*128 + config[19])
-        prog["timeDivComboBox"].setCurrentIndex(config[9])
+        prog["timeDivComboBox"].setCurrentIndex(config[13])
         prog["swingComboBox"].setCurrentIndex(config[16])
         prog["arpOctaveSpinBox"].setValue(config[19] + 1)
         prog["modeComboBox"].setCurrentIndex(config[12])
@@ -515,6 +514,9 @@ class Ui_MainWindow(object):
         prog["jsYDownSpinBox"].setValue(config[25])
         prog["jsYUpSpinBox"].setValue(config[26])
 
+        prog["transposeSpinBox"].setValue(config[115] - 12)
+        prog["octaveSpinBox"].setValue(config[10] - 4)
+
         for k_i, knob in enumerate(prog["knobs"]):
             knob["knobCCSpinBox"].setValue(config[91 + k_i*3])
             knob["knobMinSpinBox"].setValue(config[91 + 1 + k_i*3])
@@ -529,6 +531,52 @@ class Ui_MainWindow(object):
                 pad["padCCSpinBox"].setValue(config[27 + b_i*4*8 + 2 + pad_i*4])
                 pad["padTypeComboBox"].setCurrentIndex(config[27 + b_i*4*8 + 3 + pad_i*4])
 
+
+    def get_tab_programme(self, p_i):
+        config = self.midi_config.copy()
+        prog = self.progs[p_i]
+
+        config["programme"] = p_i+1
+
+        config["pad_channel"] = prog["padSpinBox"].value()
+        config["key_channel"] = prog["keySpinBox"].value()
+
+        # arp
+        config["arp_tempo_0"] = prog["tempoSpinBox"].value() // 128
+        config["arp_tempo_1"] = prog["tempoSpinBox"].value() % 128
+        config["arp_time"] = prog["timeDivComboBox"].currentIndex()
+        config["arp_swing"] = prog["swingComboBox"].currentIndex()
+        config["arp_octave"] = prog["arpOctaveSpinBox"].value()-1
+        config["arp_mode"] = prog["modeComboBox"].currentIndex()
+        config["arp_taps"] = prog["tempoTapsSpinBox"].value()
+        config["arp_clock"] = prog["clockComboBox"].currentIndex()
+        config["arp_latch"] = int(prog["latchCheckBox"].checkState())
+        config["arp_on"] = int(prog["arpCheckBox"].checkState())
+
+        # joystick
+        config["x_axis_type"] = prog["jsXAxisComboBox"].currentIndex()
+        config["x_axis_L"] = prog["jsXLeftSpinBox"].value()
+        config["x_axis_R"] = prog["jsXRightSpinBox"].value()
+        config["y_axis_type"] = prog["jsYAxisComboBox"].currentIndex()
+        config["y_axis_D"] = prog["jsYDownSpinBox"].value()
+        config["y_axis_U"] = prog["jsYUpSpinBox"].value()
+
+        config["key_transpose"] = prog["transposeSpinBox"].value() + 12
+        config["key_octave"] = prog["octaveSpinBox"].value() + 4
+
+        for k_i, knob in enumerate(prog["knobs"]):
+            config["k%s_CC" % (k_i+1)] = knob["knobCCSpinBox"].value()
+            config["k%s_LO" % (k_i+1)] = knob["knobMinSpinBox"].value()
+            config["k%s_HI" % (k_i+1)] = knob["knobMaxSpinBox"].value()
+
+        for b_i, bank in enumerate(prog["banks"]):
+            for pad_i, pad in enumerate(bank["pads"]):
+                # note = config[27 + b_i*4*8 + pad_i*4]
+                config["b%s_p%s_NT" % (b_i+1, pad_i+1)] = pad["padNoteComboBox"].currentIndex() + (pad["padNoteSpinBox"].value()+1) * 12
+                config["b%s_p%s_PC" % (b_i+1, pad_i+1)] = pad["padPCSpinBox"].value()
+                config["b%s_p%s_CC" % (b_i+1, pad_i+1)] = pad["padCCSpinBox"].value()
+                config["b%s_p%s_TP" % (b_i+1, pad_i+1)] = pad["padTypeComboBox"].currentIndex()
+        return list(config.values())
 
 
     def retranslateUi(self, MainWindow):
