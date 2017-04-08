@@ -224,13 +224,15 @@ class Akai_MPK_Mini(Ui_MainWindow):
         for i, p in enumerate(self.mo.get_ports()):
             if "MPKmini" in p:
                 self.mo.open_port(1)
+                is_out_open = True
         for i, p in enumerate(self.mi.get_ports()):
             if "MPKmini" in p:
                 self.mi.open_port(1)
                 self.mi.ignore_types(sysex=False)
+                is_in_open = True
 
-        if not is_out_open and is_in_open:
-            print("Please connect controller")
+        if not is_out_open and not is_in_open:
+            print("Controller not found")
             sys.exit()
 
     def send_midi_message(self, out_message, expected_len=117):
