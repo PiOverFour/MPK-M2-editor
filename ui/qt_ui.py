@@ -19,6 +19,41 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
+# class DragDropTab(QtWidgets.QTabWidget, QtWidgets.QAbstractButton):
+#
+#     def __init__(self, parent):
+#         super().__init__(parent)
+#
+#         self.setAcceptDrops(True)
+#
+#     def mouseMoveEvent(self, e):
+#
+#         mimeData = QtCore.QMimeData()
+#
+#         drag = QtGui.QDrag(self)
+#         drag.setMimeData(mimeData)
+#         drag.setHotSpot(e.pos() - self.rect().topLeft())
+#
+#         dropAction = drag.exec_(QtCore.Qt.MoveAction)
+#
+#     def mousePressEvent(self, e):
+#         # QtWidgets.QPushButton.mousePressEvent(self, e)
+#         # if e.button() == QtCore.Qt.LeftButton:
+#         print('press')
+#
+#     def dragEnterEvent(self, e):
+#         # if e.mimeData().hasFormat('text/plain'):
+#         e.accept()
+#         # else:
+#         # e.ignore()
+#
+#     def dropEvent(self, e):
+#         print(e)
+#         # print(dir(e))
+#         print(e.mimeData().text())
+#         # self.setText(e.mimeData().text())
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -37,11 +72,6 @@ class Ui_MainWindow(object):
         self.options.setContentsMargins(1, 5, 5, 5)
         self.options.setObjectName("options")
 
-        self.getAllPushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.getAllPushButton.setObjectName("getAllPushButton")
-        self.getAllPushButton.clicked.connect(self.get_all_programmes)
-        self.options.addWidget(self.getAllPushButton, 0, 1, 1, 1)
-
         self.getCurrentPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.getCurrentPushButton.setObjectName("getCurrentPushButton")
         self.getCurrentPushButton.clicked.connect(self.get_active_programme)
@@ -52,6 +82,11 @@ class Ui_MainWindow(object):
         self.sendCurrentPushButton.clicked.connect(self.send_active_programme)
         self.options.addWidget(self.sendCurrentPushButton, 1, 0, 1, 1)
 
+        self.getAllPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.getAllPushButton.setObjectName("getAllPushButton")
+        self.getAllPushButton.clicked.connect(self.get_all_programmes)
+        self.options.addWidget(self.getAllPushButton, 0, 1, 1, 1)
+
         self.sendAllPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.sendAllPushButton.setObjectName("sendAllPushButton")
         self.sendAllPushButton.clicked.connect(self.send_all_programmes)
@@ -59,8 +94,16 @@ class Ui_MainWindow(object):
 
         self.liveUpdateCheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.liveUpdateCheckBox.setObjectName("liveUpdateCheckBox")
+        self.liveUpdateCheckBox.setEnabled(False)
         self.options.addWidget(self.liveUpdateCheckBox, 0, 2, 1, 1)
+
+        self.sendRAMPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.sendRAMPushButton.setObjectName("sendRAMPushButton")
+        self.sendRAMPushButton.clicked.connect(self.send_RAM)
+        self.options.addWidget(self.sendRAMPushButton, 1, 2, 1, 1)
+
         self.gridLayout.addLayout(self.options, 1, 0, 1, 1)
+
         self.programmes = QtWidgets.QTabWidget(self.centralwidget)
         self.programmes.setEnabled(True)
         self.programmes.setTabShape(QtWidgets.QTabWidget.Rounded)
@@ -461,25 +504,26 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
-        self.menuFile_2 = QtWidgets.QMenu(self.menubar)
-        self.menuFile_2.setObjectName("menuFile_2")
+        # self.menuFile_2 = QtWidgets.QMenu(self.menubar)
+        # self.menuFile_2.setObjectName("menuFile_2")
         MainWindow.setMenuBar(self.menubar)
         self.actionOpen = QtWidgets.QAction(MainWindow)
         self.actionOpen.setObjectName("actionOpen")
-        self.actionSave = QtWidgets.QAction(MainWindow)
-        self.actionSave.setObjectName("actionSave")
+        self.actionOpen.triggered.connect(self.file_open)
+
+        # self.actionSave = QtWidgets.QAction(MainWindow)
+        # self.actionSave.setObjectName("actionSave")
         self.actionSave_as = QtWidgets.QAction(MainWindow)
         self.actionSave_as.setObjectName("actionSave_as")
-        self.actionSave_as_2 = QtWidgets.QAction(MainWindow)
-        self.actionSave_as_2.setObjectName("actionSave_as_2")
-        self.actionFactory_preset = QtWidgets.QAction(MainWindow)
-        self.actionFactory_preset.setObjectName("actionFactory_preset")
+        self.actionSave_as.triggered.connect(self.file_save_as)
+        # self.actionFactory_preset = QtWidgets.QAction(MainWindow)
+        # self.actionFactory_preset.setObjectName("actionFactory_preset")
         self.menuFile.addAction(self.actionOpen)
-        self.menuFile.addAction(self.actionSave)
-        self.menuFile.addAction(self.actionSave_as_2)
-        self.menuFile.addAction(self.actionFactory_preset)
+        # self.menuFile.addAction(self.actionSave)
+        self.menuFile.addAction(self.actionSave_as)
+        # self.menuFile.addAction(self.actionFactory_preset)
         self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuFile_2.menuAction())
+        # self.menubar.addAction(self.menuFile_2.menuAction())
 
         self.retranslateUi(MainWindow)
         self.programmes.setCurrentIndex(0)
@@ -488,8 +532,9 @@ class Ui_MainWindow(object):
     def get_active_tab_index(self):
         return self.programmes.currentIndex()
 
-    def fill_active_tab(self, config):
-        p_i = config[7]-1
+    def fill_tab(self, config, p_i = None):
+        if p_i is None:
+            p_i = config[7]-1
         # for i, k in enumerate(self.midi_config.keys()):
         prog = self.progs[p_i]
         prog["padSpinBox"].setValue(config[8]+1)
@@ -503,8 +548,8 @@ class Ui_MainWindow(object):
         prog["modeComboBox"].setCurrentIndex(config[12])
         prog["tempoTapsSpinBox"].setValue(config[17])
         prog["clockComboBox"].setCurrentIndex(config[14])
-        prog["latchCheckBox"].setCheckState(config[14])
-        prog["arpCheckBox"].setCheckState(config[11])
+        prog["latchCheckBox"].setCheckState(config[15])
+        prog["arpCheckBox"].setCheckState(config[15]-1)
 
         # joystick
         prog["jsXAxisComboBox"].setCurrentIndex(config[21])
@@ -550,8 +595,8 @@ class Ui_MainWindow(object):
         config["arp_mode"] = prog["modeComboBox"].currentIndex()
         config["arp_taps"] = prog["tempoTapsSpinBox"].value()
         config["arp_clock"] = prog["clockComboBox"].currentIndex()
-        config["arp_latch"] = int(prog["latchCheckBox"].checkState())
-        config["arp_on"] = int(prog["arpCheckBox"].checkState())
+        config["arp_latch"] = prog["latchCheckBox"].checkState()
+        config["arp_on"] = prog["arpCheckBox"].checkState()
 
         # joystick
         config["x_axis_type"] = prog["jsXAxisComboBox"].currentIndex()
@@ -578,6 +623,21 @@ class Ui_MainWindow(object):
                 config["b%s_p%s_TP" % (b_i+1, pad_i+1)] = pad["padTypeComboBox"].currentIndex()
         return list(config.values())
 
+    def file_open(self):
+        filename = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file...', '', '*.mk2')
+        if filename:
+            if filename[0].endswith('.mk2'):
+                self.load_mk2(filename[0])
+            else:
+                print('Unrecognized filetype')
+
+    def file_save_as(self):
+        filename = QtWidgets.QFileDialog.getSaveFileName(None, 'Save file...', '', '*.mk2')
+        if filename:
+            if filename[0].endswith('.mk2'):
+                self.save_mk2(filename[0])
+            else:
+                print('Unrecognized filetype')
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -592,6 +652,8 @@ class Ui_MainWindow(object):
         self.sendAllPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send all programmes</p></body></html>"))
         self.liveUpdateCheckBox.setText(_translate("MainWindow", "Live update"))
         self.liveUpdateCheckBox.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send values as they are changed</p></body></html>"))
+        self.sendRAMPushButton.setText(_translate("MainWindow", "Send RAM"))
+        self.sendRAMPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send arpeggiator status to the controller</p></body></html>"))
         for p_i, prog in enumerate(self.progs):
             prog["knobsGroupBox"].setTitle(_translate("MainWindow", "Knobs"))
             for k_i, knob in enumerate(prog["knobs"]):
@@ -692,9 +754,8 @@ class Ui_MainWindow(object):
                 knob["knobMaxSpinBox"].setToolTip(_translate("MainWindow", "<html><head/><body><p>Knob maximum value</p></body></html>"))
             self.programmes.setTabText(self.programmes.indexOf(prog["prog1"]), _translate("MainWindow", "PROG %s"%(p_i+1)))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
-        self.menuFile_2.setTitle(_translate("MainWindow", "Edit"))
+        # self.menuFile_2.setTitle(_translate("MainWindow", "Edit"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
-        self.actionSave.setText(_translate("MainWindow", "Save"))
+        # self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionSave_as.setText(_translate("MainWindow", "Save as..."))
-        self.actionSave_as_2.setText(_translate("MainWindow", "Save as..."))
-        self.actionFactory_preset.setText(_translate("MainWindow", "Factory preset"))
+        # self.actionFactory_preset.setText(_translate("MainWindow", "Factory preset"))

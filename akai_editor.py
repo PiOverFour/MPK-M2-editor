@@ -58,7 +58,7 @@ class Akai_MPK_Mini(Ui_MainWindow):
             ("sysex_1", 71),  # [71]
             ("sysex_2", 0),  # [0]
             ("sysex_3", 38),  # [38]
-            ("sysex_4", 103),  # [103] send 100
+            ("sysex_4", 103),  # [103] send 100; RAM 102
             ("sysex_5", 0),  # [0]
             ("sysex_6", 109),  # [109]
 
@@ -268,7 +268,7 @@ class Akai_MPK_Mini(Ui_MainWindow):
         #     in_message = self.mi.get_message()
         # in_message = in_message[0]  # strip midi time
         # print(in_message)
-        self.fill_active_tab(in_message)
+        self.fill_tab(in_message)
 
     def send_all_programmes(self):
         for p_i in range(4):
@@ -283,12 +283,32 @@ class Akai_MPK_Mini(Ui_MainWindow):
         message[4] = 100
         self.send_midi_message(message)
 
+    def send_RAM(self):
+        p_i = self.get_active_tab_index()
+        message = self.get_tab_programme(p_i)
+        message[4] = 100
+        message[7] = 0
+        self.send_midi_message(message)
+
+    # I/O
+    def load_mk2(self, filepath):
+        print('Loading', filepath)
+        with open(filepath, 'rb') as f:
+            conf = [int(i) for i in f.read()]
+            print(len(conf))
+            self.fill_tab(conf, self.get_active_tab_index())
+
+    def save_mk2(self, filepath):
+        print('Saving', filepath)
+        conf = self.get_tab_programme(self.get_active_tab_index())
+        with open(filepath, 'wb') as f:
+            for b in conf:
+                f.write(b.to_bytes(1, 'little'))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Akai_MPK_Mini()
-    # pprint(list(enumerate(ui.midi_config.keys())))
     ui.setupUi(MainWindow)
     MainWindow.show()
     ui.get_all_programmes()
