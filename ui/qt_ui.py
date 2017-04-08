@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Akai MPK Mini Editor
+# MPK M2-editor
 # Copyright (C) 2017  Damien Picard dam.pic AT free.fr
 #
 # This program is free software: you can redistribute it and/or modify
