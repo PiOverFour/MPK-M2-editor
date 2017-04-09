@@ -92,10 +92,10 @@ class Ui_MainWindow(object):
         self.sendAllPushButton.clicked.connect(self.send_all_programmes)
         self.options.addWidget(self.sendAllPushButton, 1, 1, 1, 1)
 
-        self.liveUpdateCheckBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.liveUpdateCheckBox.setObjectName("liveUpdateCheckBox")
-        self.liveUpdateCheckBox.setEnabled(False)
-        self.options.addWidget(self.liveUpdateCheckBox, 0, 2, 1, 1)
+        # self.liveUpdateCheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        # self.liveUpdateCheckBox.setObjectName("liveUpdateCheckBox")
+        # self.liveUpdateCheckBox.setEnabled(False)
+        # self.options.addWidget(self.liveUpdateCheckBox, 0, 2, 1, 1)
 
         self.sendRAMPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.sendRAMPushButton.setObjectName("sendRAMPushButton")
@@ -305,7 +305,7 @@ class Ui_MainWindow(object):
             prog["arpOctaveLabel"].setObjectName("arpOctaveLabel")
             prog["arpOctaveLayout"].addWidget(prog["arpOctaveLabel"])
             prog["arpOctaveSpinBox"] = QtWidgets.QSpinBox(prog["arpegGroupBox"])
-            prog["arpOctaveSpinBox"].setMinimum(0)
+            prog["arpOctaveSpinBox"].setMinimum(1)
             prog["arpOctaveSpinBox"].setMaximum(4)
             prog["arpOctaveSpinBox"].setProperty("value", 0)
             prog["arpOctaveSpinBox"].setObjectName("arpOctaveSpinBox")
@@ -354,6 +354,7 @@ class Ui_MainWindow(object):
             prog["verticalLayout_3"].addWidget(prog["latchCheckBox"])
             prog["arpCheckBox"] = QtWidgets.QCheckBox(prog["arpegGroupBox"])
             prog["arpCheckBox"].setObjectName("arpCheckBox")
+            # prog["arpCheckBox"].stateChanged.connect(self.send_RAM)
             prog["verticalLayout_3"].addWidget(prog["arpCheckBox"])
             prog["miscLayout"].addWidget(prog["arpegGroupBox"])
             prog["chanKeysLayout"] = QtWidgets.QVBoxLayout()
@@ -532,9 +533,10 @@ class Ui_MainWindow(object):
     def get_active_tab_index(self):
         return self.programmes.currentIndex()
 
-    def fill_tab(self, config, p_i = None):
+    def fill_tab(self, config, p_i=None):
         if p_i is None:
-            p_i = config[7]-1
+            p_i = config[7]
+        p_i -= 1
         # for i, k in enumerate(self.midi_config.keys()):
         prog = self.progs[p_i]
         prog["padSpinBox"].setValue(config[8]+1)
@@ -583,15 +585,15 @@ class Ui_MainWindow(object):
 
         config["programme"] = p_i+1
 
-        config["pad_channel"] = prog["padSpinBox"].value()
-        config["key_channel"] = prog["keySpinBox"].value()
+        config["pad_channel"] = prog["padSpinBox"].value() - 1
+        config["key_channel"] = prog["keySpinBox"].value() - 1
 
         # arp
         config["arp_tempo_0"] = prog["tempoSpinBox"].value() // 128
         config["arp_tempo_1"] = prog["tempoSpinBox"].value() % 128
         config["arp_time"] = prog["timeDivComboBox"].currentIndex()
         config["arp_swing"] = prog["swingComboBox"].currentIndex()
-        config["arp_octave"] = prog["arpOctaveSpinBox"].value()-1
+        config["arp_octave"] = prog["arpOctaveSpinBox"].value() - 1
         config["arp_mode"] = prog["modeComboBox"].currentIndex()
         config["arp_taps"] = prog["tempoTapsSpinBox"].value()
         config["arp_clock"] = prog["clockComboBox"].currentIndex()
@@ -650,8 +652,8 @@ class Ui_MainWindow(object):
         self.sendCurrentPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send only programme on current tab</p></body></html>"))
         self.sendAllPushButton.setText(_translate("MainWindow", "Send all"))
         self.sendAllPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send all programmes</p></body></html>"))
-        self.liveUpdateCheckBox.setText(_translate("MainWindow", "Live update"))
-        self.liveUpdateCheckBox.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send values as they are changed</p></body></html>"))
+        # self.liveUpdateCheckBox.setText(_translate("MainWindow", "Live update"))
+        # self.liveUpdateCheckBox.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send values as they are changed</p></body></html>"))
         self.sendRAMPushButton.setText(_translate("MainWindow", "Send RAM"))
         self.sendRAMPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send arpeggiator status to the controller</p></body></html>"))
         for p_i, prog in enumerate(self.progs):

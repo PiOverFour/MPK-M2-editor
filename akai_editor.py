@@ -214,6 +214,7 @@ class Akai_MPK_Mini(Ui_MainWindow):
             ("key_transpose", 3),  # [0,24]
             ("sysex_end", 247)  # [247]
             ))
+        self.do_live_update = False
         self.midi_setup()
 
     def midi_setup(self):
@@ -261,14 +262,7 @@ class Akai_MPK_Mini(Ui_MainWindow):
     def get_programme(self, p_i):
         self.GET_CONFIG[7] = p_i
         in_message = self.send_midi_message(self.GET_CONFIG, 117)
-        # in_message = [[]]
-        # self.mo.send_message(self.GET_CONFIG)
-        # time.sleep(0.05)
-        # while in_message is None or len(in_message[0]) != 117:
-        #     in_message = self.mi.get_message()
-        # in_message = in_message[0]  # strip midi time
-        # print(in_message)
-        self.fill_tab(in_message)
+        self.fill_tab(in_message, p_i)
 
     def send_all_programmes(self):
         for p_i in range(4):
