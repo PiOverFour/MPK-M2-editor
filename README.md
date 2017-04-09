@@ -29,9 +29,11 @@ The programme is written in Python3 and relies on PyQT5 and python-rtmidi. It wa
 A good way would be to use pip.
 In Debian-based distributions:
 ```
-  apt-get install python3-pip
+  apt-get install build-essential python3-dev python3-pip libasound2-dev libjack-dev
   pip3 install python-rtmidi PyQt5
 ```
+On Windows, you need to download [Visual Studio c++ build tools](http://landinghub.visualstudio.com/visual-cpp-build-tools).
+
 ## Usage
 Connect your controller, then start the editor with ```./akai_editor.py```
 If you're familiar with the official editor, you should find it's similar, except that programmes are grouped in tabs at the top of the window. You can send an individual programme or all of them at once. Some fields have tooltips, don't hesitate to hover them.
