@@ -421,7 +421,11 @@ class Ui_MainWindow(object):
             for bank_i in range(2):
                 bank = {}
                 bank["bankGroupBox"] = QtWidgets.QGroupBox(prog["prog1"])
-                bank["bankGroupBox"].setObjectName("bankAGroupBox")
+                bank["bankGroupBox"].setObjectName("bankGroupBox")
+                bank["bankGroupBox"].setStyleSheet("""#bankGroupBox{
+    border: 1px solid %s;
+}""" % ("red" if bank_i else "green"))
+
                 bank["gridLayout_6"] = QtWidgets.QGridLayout(bank["bankGroupBox"])
                 bank["gridLayout_6"].setContentsMargins(2, 2, 2, 2)
                 bank["gridLayout_6"].setSpacing(2)
