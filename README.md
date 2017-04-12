@@ -44,7 +44,7 @@ A good way would be to use pip for the dependencies.
 Connect your controller, then start the editor with ```./mpk_m2-editor.py```
 If you're familiar with the official editor, you should find it's similar, except that programmes are grouped in tabs at the top of the window. You can send an individual programme or all of them at once. Some fields have tooltips, don't hesitate to hover them.
 
-The Send RAM button allows the editor to send arpeggiator settings.
+The Send RAM button allows you to send the current controller configuration, without overriding any programme.
 
 ## Feedback and pull requests welcome!
 This is a good starting point. If you would like to contribute, please do so!

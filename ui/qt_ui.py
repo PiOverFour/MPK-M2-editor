@@ -568,7 +568,7 @@ class Ui_MainWindow(object):
         prog["tempoSpinBox"].setValue(config[18]*128 + config[19])
         prog["timeDivComboBox"].setCurrentIndex(config[13])
         prog["swingComboBox"].setCurrentIndex(config[16])
-        prog["arpOctaveSpinBox"].setValue(config[19] + 1)
+        prog["arpOctaveSpinBox"].setValue(config[20] + 1)
         prog["modeComboBox"].setCurrentIndex(config[12])
         prog["tempoTapsSpinBox"].setValue(config[17])
         prog["clockComboBox"].setCurrentIndex(config[14])
