@@ -572,8 +572,8 @@ class Ui_MainWindow(object):
         prog["modeComboBox"].setCurrentIndex(config[12])
         prog["tempoTapsSpinBox"].setValue(config[17])
         prog["clockComboBox"].setCurrentIndex(config[14])
-        prog["latchCheckBox"].setCheckState(config[15])
-        prog["arpCheckBox"].setCheckState(config[15]-1)
+        prog["latchCheckBox"].setCheckState(config[15]+1)
+        prog["arpCheckBox"].setCheckState(config[11]+1)
 
         # joystick
         prog["jsXAxisComboBox"].setCurrentIndex(config[21])

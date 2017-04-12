@@ -266,7 +266,6 @@ class Akai_MPK_Mini(Ui_MainWindow):
 
     def copy_to(self, p_to):
         p_from = self.get_active_tab_index()
-        print(p_from, p_to)
         conf = self.get_tab_programme(p_from)
         self.fill_tab(conf, p_to)
 
