@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from functools import partial
 
 
 # class DragDropTab(QtWidgets.QTabWidget, QtWidgets.QAbstractButton):
@@ -510,26 +511,42 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
-        # self.menuFile_2 = QtWidgets.QMenu(self.menubar)
-        # self.menuFile_2.setObjectName("menuFile_2")
+        self.menuEdit = QtWidgets.QMenu(self.menubar)
+        self.menuEdit.setObjectName("menuEdit")
         MainWindow.setMenuBar(self.menubar)
+
         self.actionOpen = QtWidgets.QAction(MainWindow)
         self.actionOpen.setObjectName("actionOpen")
         self.actionOpen.triggered.connect(self.file_open)
 
         # self.actionSave = QtWidgets.QAction(MainWindow)
         # self.actionSave.setObjectName("actionSave")
-        self.actionSave_as = QtWidgets.QAction(MainWindow)
-        self.actionSave_as.setObjectName("actionSave_as")
-        self.actionSave_as.triggered.connect(self.file_save_as)
+        self.actionSaveAs = QtWidgets.QAction(MainWindow)
+        self.actionSaveAs.setObjectName("actionSaveAs")
+        self.actionSaveAs.triggered.connect(self.file_save_as)
+
+        self.menuCopyTo = QtWidgets.QMenu(MainWindow)
+        self.menuCopyTo.setObjectName("menuCopyTo")
+
+        self.actionCopyProgs = []
+        for p_i in range(1, 5):
+            actionCopyProg = QtWidgets.QAction(MainWindow)
+            actionCopyProg.setObjectName("actionCopyProg_%s" % p_i)
+            actionCopyProg.triggered.connect(partial(self.copy_to, p_i))
+            self.menuCopyTo.addAction(actionCopyProg)
+            self.actionCopyProgs.append(actionCopyProg)
+
         # self.actionFactory_preset = QtWidgets.QAction(MainWindow)
         # self.actionFactory_preset.setObjectName("actionFactory_preset")
         self.menuFile.addAction(self.actionOpen)
         # self.menuFile.addAction(self.actionSave)
-        self.menuFile.addAction(self.actionSave_as)
+        self.menuFile.addAction(self.actionSaveAs)
         # self.menuFile.addAction(self.actionFactory_preset)
+
+        self.menuEdit.addAction(self.menuCopyTo.menuAction())
+
         self.menubar.addAction(self.menuFile.menuAction())
-        # self.menubar.addAction(self.menuFile_2.menuAction())
+        self.menubar.addAction(self.menuEdit.menuAction())
 
         self.retranslateUi(MainWindow)
         self.programmes.setCurrentIndex(0)
@@ -761,8 +778,12 @@ class Ui_MainWindow(object):
                 knob["knobMaxSpinBox"].setToolTip(_translate("MainWindow", "<html><head/><body><p>Knob maximum value</p></body></html>"))
             self.programmes.setTabText(self.programmes.indexOf(prog["prog1"]), _translate("MainWindow", "PROG %s"%(p_i+1)))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
-        # self.menuFile_2.setTitle(_translate("MainWindow", "Edit"))
+        self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
+        self.menuCopyTo.setTitle(_translate("MainWindow", "Copy to..."))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         # self.actionSave.setText(_translate("MainWindow", "Save"))
-        self.actionSave_as.setText(_translate("MainWindow", "Save as..."))
+        self.actionSaveAs.setText(_translate("MainWindow", "Save as..."))
         # self.actionFactory_preset.setText(_translate("MainWindow", "Factory preset"))
+        # self.actionCopyProgs[0].setText(_translate("MainWindow", "PROG"))
+        for p_i, action in enumerate(self.actionCopyProgs):
+            action.setText(_translate("MainWindow", "PROG %s" % (p_i + 1)))

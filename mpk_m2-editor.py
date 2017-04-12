@@ -23,14 +23,14 @@
 ##     single
 ##     all
 # get ram
-# send ram
-# interface
+## send ram
+## interface
 ##     tabs for progs
 #     autofill
-# load/save config
+## load/save config
 #     single program
 #     multi  programs
-#     .mk2
+##     .mk2
 #     mk1
 #     human readable
 # live update
@@ -263,6 +263,12 @@ class Akai_MPK_Mini(Ui_MainWindow):
         self.GET_CONFIG[7] = p_i
         in_message = self.send_midi_message(self.GET_CONFIG, 117)
         self.fill_tab(in_message, p_i)
+
+    def copy_to(self, p_to):
+        p_from = self.get_active_tab_index()
+        print(p_from, p_to)
+        conf = self.get_tab_programme(p_from)
+        self.fill_tab(conf, p_to)
 
     def send_all_programmes(self):
         for p_i in range(4):
