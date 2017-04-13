@@ -236,16 +236,26 @@ class Akai_MPK_Mini(Ui_MainWindow):
             print("Controller not found")
             sys.exit()
 
-    def send_midi_message(self, out_message, expected_len=117):
+    def send_midi_message(self, out_message, expected_msg=117):
         in_message = [[]]
         # print('out:', out_message)
         self.mo.send_message(out_message)
-        time.sleep(0.05)
-        i = 0
-        while (in_message is None or len(in_message[0]) != expected_len) and i < 10:
+        time.sleep(0.1)
+
+        # O Karnaugh, help me!
+        while ((expected_msg is None
+                and in_message is not None)
+               or (expected_msg is not None
+                   and (
+                        in_message is None
+                        or len(in_message[0]) == 0
+                        or type(in_message) is tuple
+                        and len(in_message[0]) != expected_msg
+                        )
+                   )
+               ):
             in_message = self.mi.get_message()
             # print('in:', in_message)
-            i += 1
         if in_message is not None:
             in_message = in_message[0]  # strip midi time
         return in_message
@@ -280,14 +290,14 @@ class Akai_MPK_Mini(Ui_MainWindow):
     def send_programme(self, p_i):
         message = self.get_tab_programme(p_i)
         message[4] = 100
-        self.send_midi_message(message)
+        self.send_midi_message(message, None)
 
     def send_RAM(self):
         p_i = self.get_active_tab_index()
         message = self.get_tab_programme(p_i)
         message[4] = 100
         message[7] = 0
-        self.send_midi_message(message)
+        self.send_midi_message(message, None)
 
     # I/O
     def load_mk2(self, filepath):
