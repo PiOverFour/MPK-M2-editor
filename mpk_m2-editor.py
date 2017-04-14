@@ -46,6 +46,7 @@ from pprint import pprint
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui.qt_ui import Ui_MainWindow
+from ui.autoFill import Ui_autoFill
 
 
 class Akai_MPK_Mini(Ui_MainWindow):
@@ -313,6 +314,12 @@ class Akai_MPK_Mini(Ui_MainWindow):
         with open(filepath, 'wb') as f:
             for b in conf:
                 f.write(b.to_bytes(1, 'little'))
+
+    # autofill
+    def show_autofill(self):
+        self.autofill_window = Ui_autoFill()
+        self.autofill_window.show()
+        print(dir(self.autofill_window))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

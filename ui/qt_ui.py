@@ -525,6 +525,7 @@ class Ui_MainWindow(object):
         self.actionSaveAs.setObjectName("actionSaveAs")
         self.actionSaveAs.triggered.connect(self.file_save_as)
 
+
         self.menuCopyTo = QtWidgets.QMenu(MainWindow)
         self.menuCopyTo.setObjectName("menuCopyTo")
 
@@ -536,6 +537,9 @@ class Ui_MainWindow(object):
             self.menuCopyTo.addAction(actionCopyProg)
             self.actionCopyProgs.append(actionCopyProg)
 
+        self.actionShowAutofill = QtWidgets.QAction(MainWindow)
+        self.actionShowAutofill.setObjectName("actionShowAutofill")
+        self.actionShowAutofill.triggered.connect(self.show_autofill)
         # self.actionFactory_preset = QtWidgets.QAction(MainWindow)
         # self.actionFactory_preset.setObjectName("actionFactory_preset")
         self.menuFile.addAction(self.actionOpen)
@@ -544,6 +548,7 @@ class Ui_MainWindow(object):
         # self.menuFile.addAction(self.actionFactory_preset)
 
         self.menuEdit.addAction(self.menuCopyTo.menuAction())
+        self.menuEdit.addAction(self.actionShowAutofill)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuEdit.menuAction())
@@ -783,6 +788,7 @@ class Ui_MainWindow(object):
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         # self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionSaveAs.setText(_translate("MainWindow", "Save as..."))
+        self.actionShowAutofill.setText(_translate("MainWindow", "Auto fill..."))
         # self.actionFactory_preset.setText(_translate("MainWindow", "Factory preset"))
         # self.actionCopyProgs[0].setText(_translate("MainWindow", "PROG"))
         for p_i, action in enumerate(self.actionCopyProgs):
