@@ -217,6 +217,11 @@ class Akai_MPK_Mini(Ui_MainWindow):
             ))
         self.do_live_update = False
         self.midi_setup()
+        self.autofill_window = QtWidgets.QMainWindow()
+        self.autofill_ui = Ui_autoFill()
+        self.autofill_ui.main_window = self
+        self.autofill_ui.setupUi(self.autofill_window)
+        # self.autofill_window.show()
 
     def midi_setup(self):
         self.mo = rtmidi.MidiOut()
@@ -261,7 +266,6 @@ class Akai_MPK_Mini(Ui_MainWindow):
             in_message = in_message[0]  # strip midi time
         return in_message
 
-
     def get_all_programmes(self):
         for p_i in range(1, 5):
             self.get_programme(p_i)
@@ -305,7 +309,7 @@ class Akai_MPK_Mini(Ui_MainWindow):
         print('Loading', filepath)
         with open(filepath, 'rb') as f:
             conf = [int(i) for i in f.read()]
-            print(len(conf))
+            # print(len(conf))
             self.fill_tab(conf, self.get_active_tab_index())
 
     def save_mk2(self, filepath):
@@ -315,11 +319,9 @@ class Akai_MPK_Mini(Ui_MainWindow):
             for b in conf:
                 f.write(b.to_bytes(1, 'little'))
 
-    # autofill
+    # Autofill
     def show_autofill(self):
-        self.autofill_window = Ui_autoFill()
         self.autofill_window.show()
-        print(dir(self.autofill_window))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

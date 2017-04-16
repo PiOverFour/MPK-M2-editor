@@ -7,23 +7,68 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from functools import partial
+
 
 class Ui_autoFill(QtWidgets.QMainWindow):
+
+    SCALES = [
+        [0, 2, 4, 5, 7, 9, 11],  # major
+        [0, 2, 3, 5, 7, 8, 10],  # minor
+        [0, 2, 4, 5, 7, 8, 11],  # harmonic
+        [0, 2, 3, 5, 7, 9, 10],  # dorian
+        [0, 1, 3, 5, 7, 8, 10],  # phrygian
+        [0, 2, 4, 6, 7, 9, 11],  # lydian
+        [0, 2, 4, 5, 7, 9, 10],  # myxolidian
+        [0, 1, 3, 5, 6, 8, 10],  # locrian
+    ]
+
+    def apply_autofill_knobs(self):
+        mw = self.main_window
+        p_from = mw.get_active_tab_index()
+        conf = mw.get_tab_programme(p_from)
+
+        # .currentIndex()
+        # .checkState()
+        # .value()
+        do_values = self.knobsCCStartCheckBox.checkState()
+        do_min = self.knobsCCMinCheckBox.checkState()
+        do_max = self.knobsCCMaxCheckBox.checkState()
+        if do_values:
+            print('values')
+            start_value = self.knobsCCStartSpinBox.value()
+            print(self.knobsCCDirectionComboBox.currentIndex())
+            direction = self.knobsCCDirectionComboBox.currentIndex()
+            direction = 1 if direction == 0 else -1
+            for i in range(8):
+                conf[91 + 3*i] = start_value + i*direction
+        if do_min:
+            print('min')
+            min = self.knobsMinSpinBox.value()
+            for i in range(8):
+                conf[92 + 3*i] = min
+
+        if do_max:
+            print('max')
+            max = self.knobsMaxSpinBox.value()
+            for i in range(8):
+                conf[93 + 3*i] = max
+        mw.fill_tab(conf, p_from+1)
+
+    def apply_autofill_programme(self, programme):
+        do_values = self.knobsCCStartCheckBox.checkState()
+        do_min = self.knobsCCMaxCheckBox.checkState()
+        do_max = self.knobsCCMinCheckBox.checkState()
+        if do_values:
+            start_note = padsNoteSpinBox.value()
+            direction = padsNoteComboBox.currentIndex()
+            values = SCALES[0]
+        return None
+
     def setupUi(self, autoFill):
         autoFill.setObjectName("autoFill")
         autoFill.resize(400, 200)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(autoFill.sizePolicy().hasHeightForWidth())
-        autoFill.setSizePolicy(sizePolicy)
         self.autoFillCentralwidget = QtWidgets.QWidget(autoFill)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoFillCentralwidget.sizePolicy().hasHeightForWidth())
-        self.autoFillCentralwidget.setSizePolicy(sizePolicy)
-        self.autoFillCentralwidget.setMaximumSize(QtCore.QSize(583, 16777215))
         self.autoFillCentralwidget.setObjectName("autoFillCentralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.autoFillCentralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -86,9 +131,6 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsNoteScaleComboBox.addItem("")
         self.padsNoteScaleComboBox.addItem("")
         self.padsNoteScaleComboBox.addItem("")
-        self.padsNoteScaleComboBox.addItem("")
-        self.padsNoteScaleComboBox.addItem("")
-        self.padsNoteScaleComboBox.addItem("")
         self.padsNoteGridLayout.addWidget(self.padsNoteScaleComboBox, 0, 0, 1, 1)
         self.padsSettings.addLayout(self.padsNoteGridLayout, 0, 1, 1, 1)
         self.padsPCHorizontalLayout = QtWidgets.QHBoxLayout()
@@ -129,20 +171,14 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsApplylabel.setObjectName("padsApplylabel")
         self.padsApplyHorizontalLayout.addWidget(self.padsApplylabel)
         self.padsApplyAPushButton = QtWidgets.QPushButton(self.padsGroupBox)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.padsApplyAPushButton.sizePolicy().hasHeightForWidth())
-        self.padsApplyAPushButton.setSizePolicy(sizePolicy)
         self.padsApplyAPushButton.setObjectName("padsApplyAPushButton")
+        self.padsApplyAPushButton.clicked.connect(partial(self.apply_autofill_programme, "A"))
+
         self.padsApplyHorizontalLayout.addWidget(self.padsApplyAPushButton)
         self.padsApplyBPushButton = QtWidgets.QPushButton(self.padsGroupBox)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.padsApplyBPushButton.sizePolicy().hasHeightForWidth())
-        self.padsApplyBPushButton.setSizePolicy(sizePolicy)
         self.padsApplyBPushButton.setObjectName("padsApplyBPushButton")
+        self.padsApplyBPushButton.clicked.connect(partial(self.apply_autofill_programme, "B"))
+
         self.padsApplyHorizontalLayout.addWidget(self.padsApplyBPushButton)
         self.verticalLayout_5.addLayout(self.padsApplyHorizontalLayout)
         self.verticalLayout_5.setStretch(0, 6)
@@ -188,15 +224,14 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.knobsCCMinCheckBox.setObjectName("knobsCCMinCheckBox")
         self.gridLayout.addWidget(self.knobsCCMinCheckBox, 1, 0, 1, 1)
         self.verticalLayout_6.addLayout(self.gridLayout)
+
         self.knobsApplyKnobsPushButton = QtWidgets.QPushButton(self.knobsGroupBox)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.knobsApplyKnobsPushButton.sizePolicy().hasHeightForWidth())
-        self.knobsApplyKnobsPushButton.setSizePolicy(sizePolicy)
         self.knobsApplyKnobsPushButton.setObjectName("knobsApplyKnobsPushButton")
+        self.knobsApplyKnobsPushButton.clicked.connect(self.apply_autofill_knobs)
+
         self.verticalLayout_6.addWidget(self.knobsApplyKnobsPushButton, 0, QtCore.Qt.AlignRight)
         self.horizontalLayout.addWidget(self.knobsGroupBox)
+
         autoFill.setCentralWidget(self.autoFillCentralwidget)
 
         self.retranslateUi(autoFill)
@@ -227,14 +262,11 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsNoteScaleComboBox.setItemText(1, _translate("autoFill", "Major"))
         self.padsNoteScaleComboBox.setItemText(2, _translate("autoFill", "Minor"))
         self.padsNoteScaleComboBox.setItemText(3, _translate("autoFill", "Harmonic"))
-        self.padsNoteScaleComboBox.setItemText(4, _translate("autoFill", "Melodic"))
-        self.padsNoteScaleComboBox.setItemText(5, _translate("autoFill", "Ionian"))
-        self.padsNoteScaleComboBox.setItemText(6, _translate("autoFill", "Dorian"))
-        self.padsNoteScaleComboBox.setItemText(7, _translate("autoFill", "Phrygian"))
-        self.padsNoteScaleComboBox.setItemText(8, _translate("autoFill", "Lydian"))
-        self.padsNoteScaleComboBox.setItemText(9, _translate("autoFill", "Myxolidian"))
-        self.padsNoteScaleComboBox.setItemText(10, _translate("autoFill", "Aeolian"))
-        self.padsNoteScaleComboBox.setItemText(11, _translate("autoFill", "Locrian"))
+        self.padsNoteScaleComboBox.setItemText(4, _translate("autoFill", "Dorian"))
+        self.padsNoteScaleComboBox.setItemText(5, _translate("autoFill", "Phrygian"))
+        self.padsNoteScaleComboBox.setItemText(6, _translate("autoFill", "Lydian"))
+        self.padsNoteScaleComboBox.setItemText(7, _translate("autoFill", "Myxolidian"))
+        self.padsNoteScaleComboBox.setItemText(8, _translate("autoFill", "Locrian"))
         self.padsPCDirectionSpinBox.setItemText(0, _translate("autoFill", "Up"))
         self.padsPCDirectionSpinBox.setItemText(1, _translate("autoFill", "Down"))
         self.padsCCDirectionSpinBox.setItemText(0, _translate("autoFill", "Up"))
