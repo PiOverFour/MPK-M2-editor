@@ -56,8 +56,10 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         mw.fill_tab(conf, p_from+1)
 
     def apply_autofill_programme(self, programme):
-        do_values = self.knobsCCStartCheckBox.checkState()
-        do_min = self.knobsCCMaxCheckBox.checkState()
+        do_PC = self.padsPCStartCheckBox.checkState()
+        do_CC = self.padsCCStartCheckBox.checkState()
+        do_CC_type = self.padsCCTypeCheckBox.checkState()
+        do_notes = self.padsNoteStartCheckBox.checkState()
         do_max = self.knobsCCMinCheckBox.checkState()
         if do_values:
             start_note = padsNoteSpinBox.value()
