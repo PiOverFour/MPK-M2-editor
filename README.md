@@ -46,5 +46,15 @@ If you're familiar with the official editor, you should find it's similar, excep
 
 The Send RAM button allows you to send the current controller configuration, without overriding any programme.
 
+### Joystick
+The joystick options work this way:
+* First, select the basic behaviour: **Pitchbend**, **CC1** or **CC2**.
+* **Pitchbend**: you're done.
+* **CC1**: The joystick sends a CC message on the canal specified in **Left** for the X Axis, **Up** for the Y axis.
+* **CC2**: The joystick sends a CC message on the canals specified in **Left** OR **Right** for the X Axis, **Up** OR **Down** for the Y axis.
+
+### Auto Fill
+This dialog allows you to fill several fields at once. First tick the check boxes for the options you would like to have filled (eg. PC start). Fill the corresponding fields, and press the button corresponding to the options you'd like to fill (eg. A for Bank A). This will fill the options for the *selected programme* tab only.
+
 ## Feedback and pull requests welcome!
 This is a good starting point. If you would like to contribute, please do so!
