@@ -221,7 +221,6 @@ class Akai_MPK_Mini(Ui_MainWindow):
         self.autofill_ui = Ui_autoFill()
         self.autofill_ui.main_window = self
         self.autofill_ui.setupUi(self.autofill_window)
-        self.autofill_window.show()
 
     def midi_setup(self):
         self.mo = rtmidi.MidiOut()
