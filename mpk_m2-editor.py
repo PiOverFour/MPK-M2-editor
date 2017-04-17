@@ -270,13 +270,13 @@ class Akai_MPK_Mini(Ui_MainWindow):
             self.get_programme(p_i)
 
     def get_active_programme(self):
-        p_i = self.get_active_tab_index()+1
+        p_i = self.get_active_tab_index()
         self.get_programme(p_i)
 
     def get_programme(self, p_i):
         self.GET_CONFIG[7] = p_i
         in_message = self.send_midi_message(self.GET_CONFIG, 117)
-        self.fill_tab(in_message, p_i)
+        self.fill_tab(in_message, p_i-1)
 
     def copy_to(self, p_to):
         p_from = self.get_active_tab_index()

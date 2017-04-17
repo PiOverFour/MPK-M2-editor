@@ -62,7 +62,7 @@ class Ui_autoFill(QtWidgets.QMainWindow):
             for i in range(8):
                 conf[93 + 3*i] = max
 
-        mw.fill_tab(conf, p_from+1)
+        mw.fill_tab(conf, p_from)
 
     def apply_autofill_programme(self, programme):
         mw = self.main_window
@@ -110,7 +110,7 @@ class Ui_autoFill(QtWidgets.QMainWindow):
             for i in range(8):
                 conf[30 + 4*i + programme] = cc_type
 
-        mw.fill_tab(conf, p_from+1)
+        mw.fill_tab(conf, p_from)
 
     def setupUi(self, autoFill):
         autoFill.setObjectName("autoFill")

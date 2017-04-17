@@ -558,7 +558,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def get_active_tab_index(self):
-        return self.programmes.currentIndex()
+        return self.programmes.currentIndex()+1
 
     def fill_tab(self, config, p_i=None):
         if p_i is None:
@@ -608,9 +608,9 @@ class Ui_MainWindow(object):
 
     def get_tab_programme(self, p_i):
         config = self.midi_config.copy()
-        prog = self.progs[p_i]
+        prog = self.progs[p_i-1]
 
-        config["programme"] = p_i+1
+        config["programme"] = p_i
 
         config["pad_channel"] = prog["padSpinBox"].value() - 1
         config["key_channel"] = prog["keySpinBox"].value() - 1
