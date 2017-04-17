@@ -229,11 +229,11 @@ class Akai_MPK_Mini(Ui_MainWindow):
         is_out_open, is_in_open = False, False
         for i, p in enumerate(self.mo.get_ports()):
             if "MPKmini" in p:
-                self.mo.open_port(1)
+                self.mo.open_port(i)
                 is_out_open = True
         for i, p in enumerate(self.mi.get_ports()):
             if "MPKmini" in p:
-                self.mi.open_port(1)
+                self.mi.open_port(i)
                 self.mi.ignore_types(sysex=False)
                 is_in_open = True
 
