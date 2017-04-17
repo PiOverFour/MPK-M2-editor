@@ -20,7 +20,7 @@ Alternative to the official AKAI MPKMini MkII Editor
 > along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ## Overview
-This programme is a replacement for the official Akai MPK Mini MkII Editor. It lacks a few features, but hopefully it will be at least as easy to use as the original.
+This programme is a replacement for the official Akai MPK Mini MkII Editor. Although less fancy, it is just as usable.
 
 ## Requirements
 The programme is written in Python3 and relies on PyQt5 and python-rtmidi. It was tested on GNU/Linux and Windows.
