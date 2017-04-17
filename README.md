@@ -19,6 +19,8 @@ Alternative to the official AKAI MPKMini MkII Editor
 > You should have received a copy of the GNU General Public License
 > along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+![Editor window](editor_screenshot.png?raw=true "The editor")
+
 ## Overview
 This programme is a replacement for the official Akai MPK Mini MkII Editor. Although less fancy, it is just as usable.
 
@@ -44,6 +46,8 @@ A good way would be to use pip for the dependencies.
 Connect your controller, then start the editor with ```./mpk_m2-editor.py```
 If you're familiar with the official editor, you should find it's similar, except that programmes are grouped in tabs at the top of the window. You can send an individual programme or all of them at once. Some fields have tooltips, don't hesitate to hover them.
 
+You can use the scrollwheel to modify any value. If you use it with `CTRL`, the values will change by increments of 10.
+
 The Send RAM button allows you to send the current controller configuration, without overriding any programme.
 
 ### Joystick
@@ -54,7 +58,9 @@ The joystick options work this way:
 * **CC2**: The joystick sends a CC message on the canals specified in **Left** OR **Right** for the X Axis, **Up** OR **Down** for the Y axis.
 
 ### Auto Fill
-This dialog allows you to fill several fields at once. First tick the check boxes for the options you would like to have filled (eg. PC start). Fill the corresponding fields, and press the button corresponding to the options you'd like to fill (eg. A for Bank A). This will fill the options for the *selected programme* tab only.
+Click the menu Edit -> Auto fill... This dialog allows you to fill several fields at once. First tick the check boxes for the options you would like to have filled (eg. PC start). Fill the corresponding fields, and press the button corresponding to the options you'd like to fill (eg. A for Bank A). This will fill the options for the *selected programme* tab only.
+
+![Auto fill window](autofill_screenshot.png?raw=true "The auto fill window")
 
 ## Feedback and pull requests welcome!
 This is a good starting point. If you would like to contribute, please do so!
