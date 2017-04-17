@@ -13,14 +13,15 @@ from functools import partial
 class Ui_autoFill(QtWidgets.QMainWindow):
 
     SCALES = [
-        [0, 2, 4, 5, 7, 9, 11],  # major
-        [0, 2, 3, 5, 7, 8, 10],  # minor
-        [0, 2, 4, 5, 7, 8, 11],  # harmonic
-        [0, 2, 3, 5, 7, 9, 10],  # dorian
-        [0, 1, 3, 5, 7, 8, 10],  # phrygian
-        [0, 2, 4, 6, 7, 9, 11],  # lydian
-        [0, 2, 4, 5, 7, 9, 10],  # myxolidian
-        [0, 1, 3, 5, 6, 8, 10],  # locrian
+        [0, 1, 2, 3, 4, 5,  6,  7],  # chromatic
+        [0, 2, 4, 5, 7, 9, 11, 12],  # major
+        [0, 2, 3, 5, 7, 8, 10, 12],  # minor
+        [0, 2, 4, 5, 7, 8, 11, 12],  # harmonic
+        [0, 2, 3, 5, 7, 9, 10, 12],  # dorian
+        [0, 1, 3, 5, 7, 8, 10, 12],  # phrygian
+        [0, 2, 4, 6, 7, 9, 11, 12],  # lydian
+        [0, 2, 4, 5, 7, 9, 10, 12],  # myxolidian
+        [0, 1, 3, 5, 6, 8, 10, 12],  # locrian
     ]
 
     def apply_autofill_knobs(self):
@@ -35,7 +36,6 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         do_min = self.knobsCCMinCheckBox.checkState()
         do_max = self.knobsCCMaxCheckBox.checkState()
         if do_values:
-            print('values')
             start_value = self.knobsCCStartSpinBox.value()
             print(self.knobsCCDirectionComboBox.currentIndex())
             direction = self.knobsCCDirectionComboBox.currentIndex()
@@ -43,29 +43,64 @@ class Ui_autoFill(QtWidgets.QMainWindow):
             for i in range(8):
                 conf[91 + 3*i] = start_value + i*direction
         if do_min:
-            print('min')
             min = self.knobsMinSpinBox.value()
             for i in range(8):
                 conf[92 + 3*i] = min
 
         if do_max:
-            print('max')
             max = self.knobsMaxSpinBox.value()
             for i in range(8):
                 conf[93 + 3*i] = max
+
         mw.fill_tab(conf, p_from+1)
 
     def apply_autofill_programme(self, programme):
+        mw = self.main_window
+        p_from = mw.get_active_tab_index()
+        conf = mw.get_tab_programme(p_from)
+
+        programme = 0 if programme == 'A' else 32
+
+        do_notes = self.padsNoteStartCheckBox.checkState()
         do_PC = self.padsPCStartCheckBox.checkState()
         do_CC = self.padsCCStartCheckBox.checkState()
         do_CC_type = self.padsCCTypeCheckBox.checkState()
-        do_notes = self.padsNoteStartCheckBox.checkState()
-        do_max = self.knobsCCMinCheckBox.checkState()
-        if do_values:
-            start_note = padsNoteSpinBox.value()
-            direction = padsNoteComboBox.currentIndex()
-            values = SCALES[0]
-        return None
+        if do_notes:
+            scale = self.padsNoteScaleComboBox.currentIndex()
+            direction = self.padsNoteDirectionComboBox.currentIndex()
+            start_note = self.padsNoteComboBox.currentIndex()
+            octave = self.padsNoteSpinBox.value()
+            values = self.SCALES[scale]
+
+            start_note = start_note + (octave+1) * 12
+            if direction:
+                values.reverse()
+                values = [n - values[0] for n in values]
+            values = [n + start_note for n in values]
+
+            for i, val in enumerate(values):
+                conf[27 + 4*i + programme] = val
+
+        if do_PC:
+            pc = self.padsPCStartSpinBox.value()
+            pc_direction = self.padsPCDirectionComboBox.currentIndex()
+            pc_direction = 1 if pc_direction == 0 else -1
+            for i in range(8):
+                conf[28 + 4*i + programme] = pc + i*pc_direction
+
+        if do_CC:
+            cc = self.padsCCStartSpinBox.value()
+            cc_direction = self.padsCCDirectionComboBox.currentIndex()
+            cc_direction = 1 if cc_direction == 0 else -1
+            for i in range(8):
+                conf[29 + 4*i + programme] = cc + i*cc_direction
+
+        if do_CC_type:
+            cc_type = self.padsCCTypeComboBox.currentIndex()
+            for i in range(8):
+                conf[30 + 4*i + programme] = cc_type
+
+        mw.fill_tab(conf, p_from+1)
 
     def setupUi(self, autoFill):
         autoFill.setObjectName("autoFill")
@@ -117,11 +152,11 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsNoteComboBox.addItem("")
         self.padsNoteComboBox.addItem("")
         self.padsNoteGridLayout.addWidget(self.padsNoteComboBox, 1, 0, 1, 1)
-        self.padsNoteDirectionSpinBox = QtWidgets.QComboBox(self.padsGroupBox)
-        self.padsNoteDirectionSpinBox.setObjectName("padsNoteDirectionSpinBox")
-        self.padsNoteDirectionSpinBox.addItem("")
-        self.padsNoteDirectionSpinBox.addItem("")
-        self.padsNoteGridLayout.addWidget(self.padsNoteDirectionSpinBox, 0, 1, 1, 1)
+        self.padsNoteDirectionComboBox = QtWidgets.QComboBox(self.padsGroupBox)
+        self.padsNoteDirectionComboBox.setObjectName("padsNoteDirectionComboBox")
+        self.padsNoteDirectionComboBox.addItem("")
+        self.padsNoteDirectionComboBox.addItem("")
+        self.padsNoteGridLayout.addWidget(self.padsNoteDirectionComboBox, 0, 1, 1, 1)
         self.padsNoteScaleComboBox = QtWidgets.QComboBox(self.padsGroupBox)
         self.padsNoteScaleComboBox.setObjectName("padsNoteScaleComboBox")
         self.padsNoteScaleComboBox.addItem("")
@@ -142,11 +177,11 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsPCStartSpinBox.setMaximum(127)
         self.padsPCStartSpinBox.setObjectName("padsPCStartSpinBox")
         self.padsPCHorizontalLayout.addWidget(self.padsPCStartSpinBox)
-        self.padsPCDirectionSpinBox = QtWidgets.QComboBox(self.padsGroupBox)
-        self.padsPCDirectionSpinBox.setObjectName("padsPCDirectionSpinBox")
-        self.padsPCDirectionSpinBox.addItem("")
-        self.padsPCDirectionSpinBox.addItem("")
-        self.padsPCHorizontalLayout.addWidget(self.padsPCDirectionSpinBox)
+        self.padsPCDirectionComboBox = QtWidgets.QComboBox(self.padsGroupBox)
+        self.padsPCDirectionComboBox.setObjectName("padsPCDirectionComboBox")
+        self.padsPCDirectionComboBox.addItem("")
+        self.padsPCDirectionComboBox.addItem("")
+        self.padsPCHorizontalLayout.addWidget(self.padsPCDirectionComboBox)
         self.padsSettings.addLayout(self.padsPCHorizontalLayout, 1, 1, 1, 1)
         self.padsCCHorizontalLayout = QtWidgets.QHBoxLayout()
         self.padsCCHorizontalLayout.setSpacing(0)
@@ -155,11 +190,11 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsCCStartSpinBox.setMaximum(127)
         self.padsCCStartSpinBox.setObjectName("padsCCStartSpinBox")
         self.padsCCHorizontalLayout.addWidget(self.padsCCStartSpinBox)
-        self.padsCCDirectionSpinBox = QtWidgets.QComboBox(self.padsGroupBox)
-        self.padsCCDirectionSpinBox.setObjectName("padsCCDirectionSpinBox")
-        self.padsCCDirectionSpinBox.addItem("")
-        self.padsCCDirectionSpinBox.addItem("")
-        self.padsCCHorizontalLayout.addWidget(self.padsCCDirectionSpinBox)
+        self.padsCCDirectionComboBox = QtWidgets.QComboBox(self.padsGroupBox)
+        self.padsCCDirectionComboBox.setObjectName("padsCCDirectionComboBox")
+        self.padsCCDirectionComboBox.addItem("")
+        self.padsCCDirectionComboBox.addItem("")
+        self.padsCCHorizontalLayout.addWidget(self.padsCCDirectionComboBox)
         self.padsSettings.addLayout(self.padsCCHorizontalLayout, 2, 1, 1, 1)
         self.padsCCTypeComboBox = QtWidgets.QComboBox(self.padsGroupBox)
         self.padsCCTypeComboBox.setObjectName("padsCCTypeComboBox")
@@ -174,11 +209,13 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsApplyHorizontalLayout.addWidget(self.padsApplylabel)
         self.padsApplyAPushButton = QtWidgets.QPushButton(self.padsGroupBox)
         self.padsApplyAPushButton.setObjectName("padsApplyAPushButton")
+        self.padsApplyAPushButton.setStyleSheet("background-color: green")
         self.padsApplyAPushButton.clicked.connect(partial(self.apply_autofill_programme, "A"))
 
         self.padsApplyHorizontalLayout.addWidget(self.padsApplyAPushButton)
         self.padsApplyBPushButton = QtWidgets.QPushButton(self.padsGroupBox)
         self.padsApplyBPushButton.setObjectName("padsApplyBPushButton")
+        self.padsApplyBPushButton.setStyleSheet("background-color: red")
         self.padsApplyBPushButton.clicked.connect(partial(self.apply_autofill_programme, "B"))
 
         self.padsApplyHorizontalLayout.addWidget(self.padsApplyBPushButton)
@@ -258,8 +295,8 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsNoteComboBox.setItemText(8, _translate("autoFill", "G#"))
         self.padsNoteComboBox.setItemText(9, _translate("autoFill", "A"))
         self.padsNoteComboBox.setItemText(10, _translate("autoFill", "B"))
-        self.padsNoteDirectionSpinBox.setItemText(0, _translate("autoFill", "Up"))
-        self.padsNoteDirectionSpinBox.setItemText(1, _translate("autoFill", "Down"))
+        self.padsNoteDirectionComboBox.setItemText(0, _translate("autoFill", "Up"))
+        self.padsNoteDirectionComboBox.setItemText(1, _translate("autoFill", "Down"))
         self.padsNoteScaleComboBox.setItemText(0, _translate("autoFill", "Chromatic"))
         self.padsNoteScaleComboBox.setItemText(1, _translate("autoFill", "Major"))
         self.padsNoteScaleComboBox.setItemText(2, _translate("autoFill", "Minor"))
@@ -269,12 +306,12 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         self.padsNoteScaleComboBox.setItemText(6, _translate("autoFill", "Lydian"))
         self.padsNoteScaleComboBox.setItemText(7, _translate("autoFill", "Myxolidian"))
         self.padsNoteScaleComboBox.setItemText(8, _translate("autoFill", "Locrian"))
-        self.padsPCDirectionSpinBox.setItemText(0, _translate("autoFill", "Up"))
-        self.padsPCDirectionSpinBox.setItemText(1, _translate("autoFill", "Down"))
-        self.padsCCDirectionSpinBox.setItemText(0, _translate("autoFill", "Up"))
-        self.padsCCDirectionSpinBox.setItemText(1, _translate("autoFill", "Down"))
-        self.padsCCTypeComboBox.setItemText(0, _translate("autoFill", "Toggle"))
-        self.padsCCTypeComboBox.setItemText(1, _translate("autoFill", "Momentary"))
+        self.padsPCDirectionComboBox.setItemText(0, _translate("autoFill", "Up"))
+        self.padsPCDirectionComboBox.setItemText(1, _translate("autoFill", "Down"))
+        self.padsCCDirectionComboBox.setItemText(0, _translate("autoFill", "Up"))
+        self.padsCCDirectionComboBox.setItemText(1, _translate("autoFill", "Down"))
+        self.padsCCTypeComboBox.setItemText(0, _translate("autoFill", "Momentary"))
+        self.padsCCTypeComboBox.setItemText(1, _translate("autoFill", "Toggle"))
         self.padsApplylabel.setText(_translate("autoFill", "  Apply to..."))
         self.padsApplyAPushButton.setText(_translate("autoFill", "A"))
         self.padsApplyBPushButton.setText(_translate("autoFill", "B"))
