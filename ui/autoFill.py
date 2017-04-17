@@ -48,7 +48,6 @@ class Ui_autoFill(QtWidgets.QMainWindow):
         do_max = self.knobsCCMaxCheckBox.checkState()
         if do_values:
             start_value = self.knobsCCStartSpinBox.value()
-            print(self.knobsCCDirectionComboBox.currentIndex())
             direction = self.knobsCCDirectionComboBox.currentIndex()
             direction = 1 if direction == 0 else -1
             for i in range(8):
