@@ -25,7 +25,7 @@ Alternative to the official AKAI MPKMini MkII Editor
 This programme is a replacement for the official Akai MPK Mini MkII Editor. Although less fancy, it is just as usable.
 
 ## Requirements
-The programme is written in Python3 and relies on PyQt5 and python-rtmidi. It was tested on GNU/Linux and Windows.
+The programme is written in Python3 and relies on PyQt5 and python-rtmidi. It was tested on GNU/Linux, Mac OS X and Windows.
 
 ## Installation
 A good way would be to use pip for the dependencies.
@@ -34,6 +34,14 @@ A good way would be to use pip for the dependencies.
   apt-get install build-essential python3-dev python3-pip libasound2-dev libjack-dev
   pip3 install python-rtmidi PyQt5
 ```
+
+### Mac OS X
+You can install Python and pip using homebrew. You may need a recent version of Mac OS X.
+```
+  brew install python3
+  pip3 install python-rtmidi PyQt5
+```
+
 ### Windows
 * Download and install `python3` from [the python website](https://www.python.org/downloads/windows/). Make sure you install `pip` as well in the installer wizard
 * Download and install [Visual C++ build tools 2015](http://landinghub.visualstudio.com/visual-cpp-build-tools)
