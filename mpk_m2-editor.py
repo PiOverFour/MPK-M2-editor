@@ -60,7 +60,7 @@ class Akai_MPK_Mini(Ui_MainWindow):
             ("sysex_2", 0),  # [0]
             ("sysex_3", 38),  # [38]
             ("sysex_4", 103),  # [103] send 100; RAM 102
-            ("sysex_5", 0),  # [0]
+            ("sysex_5", 0),  # [0] get RAM 1
             ("sysex_6", 109),  # [109]
 
             ("programme", 1),  # [1,4]
@@ -274,9 +274,10 @@ class Akai_MPK_Mini(Ui_MainWindow):
         self.get_programme(p_i)
 
     def get_programme(self, p_i):
-        self.GET_CONFIG[7] = p_i
-        in_message = self.send_midi_message(self.GET_CONFIG, 117)
-        self.fill_tab(in_message, p_i-1)
+        out_message = self.GET_CONFIG[:]
+        out_message[7] = p_i
+        in_message = self.send_midi_message(out_message, 117)
+        self.fill_tab(in_message, p_i)
 
     def copy_to(self, p_to):
         p_from = self.get_active_tab_index()
@@ -296,12 +297,22 @@ class Akai_MPK_Mini(Ui_MainWindow):
         message[4] = 100
         self.send_midi_message(message, None)
 
+    def get_RAM(self):
+        p_i = self.get_active_tab_index()
+        out_message = self.GET_CONFIG[:]
+        out_message[5] = 0
+        out_message[7] = 0
+        print(out_message)
+        in_message = self.send_midi_message(out_message, 117)
+        print(in_message)
+        self.fill_tab(in_message, p_i)
+
     def send_RAM(self):
         p_i = self.get_active_tab_index()
-        message = self.get_tab_programme(p_i)
-        message[4] = 100
-        message[7] = 0
-        self.send_midi_message(message, None)
+        out_message = self.get_tab_programme(p_i)
+        out_message[4] = 100
+        out_message[7] = 0
+        self.send_midi_message(out_message, None)
 
     # I/O
     def load_mk2(self, filepath):

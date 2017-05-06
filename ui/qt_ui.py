@@ -98,6 +98,11 @@ class Ui_MainWindow(object):
         # self.liveUpdateCheckBox.setEnabled(False)
         # self.options.addWidget(self.liveUpdateCheckBox, 0, 2, 1, 1)
 
+        self.getRAMPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.getRAMPushButton.setObjectName("getRAMPushButton")
+        self.getRAMPushButton.clicked.connect(self.get_RAM)
+        self.options.addWidget(self.getRAMPushButton, 0, 2, 1, 1)
+
         self.sendRAMPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.sendRAMPushButton.setObjectName("sendRAMPushButton")
         self.sendRAMPushButton.clicked.connect(self.send_RAM)
@@ -681,8 +686,10 @@ class Ui_MainWindow(object):
         self.sendAllPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send all programmes</p></body></html>"))
         # self.liveUpdateCheckBox.setText(_translate("MainWindow", "Live update"))
         # self.liveUpdateCheckBox.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send values as they are changed</p></body></html>"))
+        self.getRAMPushButton.setText(_translate("MainWindow", "Get RAM"))
+        self.getRAMPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Get current controller status</p></body></html>"))
         self.sendRAMPushButton.setText(_translate("MainWindow", "Send RAM"))
-        self.sendRAMPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send arpeggiator status to the controller</p></body></html>"))
+        self.sendRAMPushButton.setToolTip(_translate("MainWindow", "<html><head/><body><p>Send current tab to the controller, without overwriting any programme</p></body></html>"))
         for p_i, prog in enumerate(self.progs):
             prog["knobsGroupBox"].setTitle(_translate("MainWindow", "Knobs"))
             for k_i, knob in enumerate(prog["knobs"]):
