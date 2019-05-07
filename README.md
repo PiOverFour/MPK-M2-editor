@@ -32,14 +32,14 @@ A good way would be to use pip for the dependencies.
 ### Debian-based distributions
 ```
   apt-get install build-essential python3-dev python3-pip libasound2-dev libjack-dev
-  pip3 install python-rtmidi PyQt5
+  pip3 install -r requirements.txt
 ```
 
 ### Mac OS X
 You can install Python and pip using homebrew. You may need a recent version of Mac OS X.
 ```
   brew install python3
-  pip3 install python-rtmidi PyQt5
+  pip3 install -r requirements.txt
 ```
 
 ### Windows
@@ -47,7 +47,7 @@ You can install Python and pip using homebrew. You may need a recent version of 
 * Download and install [Visual C++ build tools 2015](http://landinghub.visualstudio.com/visual-cpp-build-tools)
 * In a command prompt, type:
 ```
-  pip3 install python-rtmidi PyQt5
+  pip3 install -r requirements.txt
 ```
 
 ## Usage

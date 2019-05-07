@@ -1,0 +1,2 @@
+python-rtmidi
+PyQt5
