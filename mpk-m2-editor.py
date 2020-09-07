@@ -335,6 +335,10 @@ class Akai_MPK_Mini(Ui_MainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    translator = QtCore.QTranslator()
+    locale = QtCore.QLocale()
+    translator.load(locale, "", directory="i18n")
+    QtCore.QCoreApplication.installTranslator(translator)
     MainWindow = QtWidgets.QMainWindow()
     ui = Akai_MPK_Mini()
     ui.setupUi(MainWindow)
