@@ -2,7 +2,9 @@ MPK M2-editor
 =============
 Alternative to the official AKAI MPKMini MkII Editor
 
-![Editor window](editor_screenshot.png?raw=true "The editor")
+[🇫🇷](docs/README.fr.md)
+
+![Editor window](docs/editor_screenshot.png?raw=true "The editor")
 
 ## Overview
 This program is a replacement for the official Akai MPK Mini MkII Editor. Although less fancy, it is just as usable.
@@ -51,7 +53,7 @@ The joystick options work this way:
 ### Auto Fill
 Click the menu Edit -> Auto fill... This dialog allows you to fill several fields at once. First tick the check boxes for the options you would like to have filled (eg. PC start). Fill the corresponding fields, and press the button corresponding to the options you'd like to fill (eg. A for Bank A). This will fill the options for the *selected program* tab only.
 
-![Auto fill window](autofill_screenshot.png?raw=true "The auto fill window")
+![Auto fill window](docs/autofill_screenshot.png?raw=true "The auto fill window")
 
 ## Feedback and pull requests welcome!
 This is a good starting point. If you would like to contribute, please do so!
