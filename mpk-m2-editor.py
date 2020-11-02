@@ -45,6 +45,7 @@ from collections import OrderedDict
 from pprint import pprint
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 from ui.qt_ui import Ui_MainWindow
 from ui.autoFill import Ui_autoFill
 
@@ -216,11 +217,28 @@ class Akai_MPK_Mini(Ui_MainWindow):
             ("sysex_end", 247)  # [247]
             ))
         self.do_live_update = False
-        self.midi_setup()
         self.autofill_window = QtWidgets.QMainWindow()
         self.autofill_ui = Ui_autoFill()
         self.autofill_ui.main_window = self
         self.autofill_ui.setupUi(self.autofill_window)
+        self.controller_found = False
+        self.midi_setup()
+
+    def show_popup_controller_not_found(self):
+        while not self.controller_found:
+            msg = QMessageBox()
+            msg.setWindowTitle("MPK Mini Mk2 Editor")
+            msg.setText("Controller not found")
+            msg.setIcon(QMessageBox.Warning)
+            msg.setStandardButtons(QMessageBox.Retry|QMessageBox.Close)
+            msg.setDefaultButton(QMessageBox.Retry)
+
+            ret = msg.exec()
+
+            if ret == QMessageBox.Close:
+                sys.exit()
+            else:
+                self.midi_setup()
 
     def midi_setup(self):
         self.mo = rtmidi.MidiOut()
@@ -238,8 +256,9 @@ class Akai_MPK_Mini(Ui_MainWindow):
                 is_in_open = True
 
         if not is_out_open and not is_in_open:
-            print("Controller not found")
-            sys.exit()
+            self.show_popup_controller_not_found()
+        else:
+            self.controller_found = True
 
     def send_midi_message(self, out_message, expected_msg=117):
         in_message = [[]]
