@@ -658,7 +658,7 @@ class Ui_MainWindow(object):
         return list(config.values())
 
     def file_open(self):
-        filename = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file…', '', '*.mk2')
+        filename = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file…', '', 'MK2 files (*.mk2)')
         if filename:
             if filename[0].endswith('.mk2'):
                 self.load_mk2(filename[0])
@@ -666,7 +666,7 @@ class Ui_MainWindow(object):
                 print('Unrecognized filetype')
 
     def file_save_as(self):
-        filename = QtWidgets.QFileDialog.getSaveFileName(None, 'Save file…', '', '*.mk2')
+        filename = QtWidgets.QFileDialog.getSaveFileName(None, 'Save file…', '', 'MK2 files (*.mk2)')
         if filename:
             if filename[0].endswith('.mk2'):
                 self.save_mk2(filename[0])
