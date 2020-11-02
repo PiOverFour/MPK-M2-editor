@@ -39,6 +39,7 @@
 # PyPI?
 
 import sys
+import os
 import rtmidi
 import time
 from collections import OrderedDict
@@ -357,7 +358,10 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     appTranslator = QtCore.QTranslator()
 
-    if appTranslator.load(QtCore.QLocale(), "", directory="i18n"):
+    if appTranslator.load(QtCore.QLocale(), "",
+                          directory=os.path.join(os.path.dirname
+                                                 (os.path.abspath(__file__)),
+                                                 "i18n")):
         app.installTranslator(appTranslator)
 
     sysTranslator = QtCore.QTranslator()
