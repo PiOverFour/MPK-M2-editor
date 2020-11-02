@@ -338,7 +338,6 @@ if __name__ == "__main__":
     appTranslator = QtCore.QTranslator()
 
     if appTranslator.load(QtCore.QLocale(), "", directory="i18n"):
-    #if appTranslator.load(QtCore.QLocale(), "MPK-M2-editor", '_', "i18n"):
         app.installTranslator(appTranslator)
 
     sysTranslator = QtCore.QTranslator()
@@ -346,7 +345,6 @@ if __name__ == "__main__":
     if sysTranslator.load(QtCore.QLocale(), 'qt', '_', pathSysTranslations):
         app.installTranslator(sysTranslator)
 
-    print(QtWidgets.QApplication.translate('MainWindow', 'Send all'))
     MainWindow = QtWidgets.QMainWindow()
     ui = Akai_MPK_Mini()
     ui.setupUi(MainWindow)
