@@ -658,7 +658,7 @@ class Ui_MainWindow(object):
         return list(config.values())
 
     def file_open(self):
-        filename = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file...', '', '*.mk2')
+        filename = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file…', '', '*.mk2')
         if filename:
             if filename[0].endswith('.mk2'):
                 self.load_mk2(filename[0])
@@ -666,7 +666,7 @@ class Ui_MainWindow(object):
                 print('Unrecognized filetype')
 
     def file_save_as(self):
-        filename = QtWidgets.QFileDialog.getSaveFileName(None, 'Save file...', '', '*.mk2')
+        filename = QtWidgets.QFileDialog.getSaveFileName(None, 'Save file…', '', '*.mk2')
         if filename:
             if filename[0].endswith('.mk2'):
                 self.save_mk2(filename[0])
@@ -769,16 +769,16 @@ class Ui_MainWindow(object):
                     pad["padTypeComboBox"].setItemText(1, _translate("MainWindow", "Toggle"))
                     pad["padNoteLabel"].setText(_translate("MainWindow", "Note"))
                     pad["padNoteComboBox"].setItemText(0, _translate("MainWindow", "C"))
-                    pad["padNoteComboBox"].setItemText(1, _translate("MainWindow", "C#"))
+                    pad["padNoteComboBox"].setItemText(1, _translate("MainWindow", "C♯"))
                     pad["padNoteComboBox"].setItemText(2, _translate("MainWindow", "D"))
-                    pad["padNoteComboBox"].setItemText(3, _translate("MainWindow", "D#"))
+                    pad["padNoteComboBox"].setItemText(3, _translate("MainWindow", "D♯"))
                     pad["padNoteComboBox"].setItemText(4, _translate("MainWindow", "E"))
                     pad["padNoteComboBox"].setItemText(5, _translate("MainWindow", "F"))
-                    pad["padNoteComboBox"].setItemText(6, _translate("MainWindow", "F#"))
+                    pad["padNoteComboBox"].setItemText(6, _translate("MainWindow", "F♯"))
                     pad["padNoteComboBox"].setItemText(7, _translate("MainWindow", "G"))
-                    pad["padNoteComboBox"].setItemText(8, _translate("MainWindow", "G#"))
+                    pad["padNoteComboBox"].setItemText(8, _translate("MainWindow", "G♯"))
                     pad["padNoteComboBox"].setItemText(9, _translate("MainWindow", "A"))
-                    pad["padNoteComboBox"].setItemText(10, _translate("MainWindow", "A#"))
+                    pad["padNoteComboBox"].setItemText(10, _translate("MainWindow", "A♯"))
                     pad["padNoteComboBox"].setItemText(11, _translate("MainWindow", "B"))
                     pad["padPCLabel"].setText(_translate("MainWindow", "PC"))
 
@@ -791,14 +791,14 @@ class Ui_MainWindow(object):
                 knob["knobCCSpinBox"].setToolTip(self.get_tooltip(_translate("MainWindow", "Knob CC value")))
                 knob["knobMinSpinBox"].setToolTip(self.get_tooltip(_translate("MainWindow", "Knob minimum value")))
                 knob["knobMaxSpinBox"].setToolTip(self.get_tooltip(_translate("MainWindow", "Knob maximum value")))
-            self.programmes.setTabText(self.programmes.indexOf(prog["prog1"]), _translate("MainWindow", "PROG ") + str(p_i+1))
+            self.programmes.setTabText(self.programmes.indexOf(prog["prog1"]), _translate("MainWindow", "PROG") + " " + str(p_i+1))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
-        self.menuCopyTo.setTitle(_translate("MainWindow", "Copy to..."))
+        self.menuCopyTo.setTitle(_translate("MainWindow", "Copy to…"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         # self.actionSave.setText(_translate("MainWindow", "Save"))
-        self.actionSaveAs.setText(_translate("MainWindow", "Save as..."))
-        self.actionShowAutofill.setText(_translate("MainWindow", "Auto fill..."))
+        self.actionSaveAs.setText(_translate("MainWindow", "Save as…"))
+        self.actionShowAutofill.setText(_translate("MainWindow", "Auto fill…"))
         # self.actionFactory_preset.setText(_translate("MainWindow", "Factory preset"))
         # self.actionCopyProgs[0].setText(_translate("MainWindow", "PROG"))
         for p_i, action in enumerate(self.actionCopyProgs):
