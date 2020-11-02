@@ -225,10 +225,11 @@ class Akai_MPK_Mini(Ui_MainWindow):
         self.midi_setup()
 
     def show_popup_controller_not_found(self):
+        _translate = QtCore.QCoreApplication.translate
         while not self.controller_found:
             msg = QMessageBox()
-            msg.setWindowTitle("MPK Mini Mk2 Editor")
-            msg.setText("Controller not found")
+            msg.setWindowTitle(_translate("popup", "MPK Mini Mk2 Editor"))
+            msg.setText(_translate("popup", "Controller not found"))
             msg.setIcon(QMessageBox.Warning)
             msg.setStandardButtons(QMessageBox.Retry|QMessageBox.Close)
             msg.setDefaultButton(QMessageBox.Retry)
