@@ -80,7 +80,8 @@ C’est un bon point de départ, mais n’hésitez pas à contribuer !
 
 ## Licence
 
-> Copyright (C) 2017 Damien Picard dam.pic AT free.fr
+> Copyright (C) 2017-2020 Damien Picard dam.pic AT free.fr et
+> contributeurs
 >
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU General Public License as published by
