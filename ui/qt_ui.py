@@ -59,10 +59,14 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         # MainWindow.resize(1032, 764)
-        font = QtGui.QFont()
-        font.setFamily("DejaVu Sans")
-        font.setPointSize(8)
-        MainWindow.setFont(font)
+        MainWindow.setStyleSheet("""
+          * {
+             font: 9pt;
+            }
+          QGroupBox {
+            padding: 2px;
+            padding-top: 20px;
+          }""")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -428,10 +432,10 @@ class Ui_MainWindow(object):
                 bank = {}
                 bank["bankGroupBox"] = QtWidgets.QGroupBox(prog["prog1"])
                 bank["bankGroupBox"].setObjectName("bankGroupBox")
-                bank["bankGroupBox"].setStyleSheet("""#bankGroupBox{
-    border: 2px solid %s;
-    margin-top: 1.0em;
-}""" % ("red" if bank_i else "green"))
+                bank["bankGroupBox"].setStyleSheet("""
+                  #bankGroupBox{
+                    border: 2px solid %s;
+                  }""" % ("red" if bank_i else "green"))
 
                 bank["gridLayout_6"] = QtWidgets.QGridLayout(bank["bankGroupBox"])
                 bank["gridLayout_6"].setContentsMargins(2, 2, 2, 2)
