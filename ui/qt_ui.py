@@ -764,8 +764,8 @@ class Ui_MainWindow(object):
             prog["transposeLabel"].setText(_translate("MainWindow", "Transpose"))
             prog["octaveLabel"].setText(_translate("MainWindow", "Octave"))
             for b_i, bank in enumerate(prog["banks"]):
-                bank_name = "Bank B" if b_i else "Bank A"
-                bank["bankGroupBox"].setTitle(_translate("MainWindow", bank_name))
+                bank_name = _translate("MainWindow", "Bank") + " " + ("B" if b_i else "A")
+                bank["bankGroupBox"].setTitle(bank_name)
                 for pa_i, pad in enumerate(bank["pads"]):
                     pad["padGroupBox"].setTitle(_translate("MainWindow", "Pad " + str(pa_i+1)))
                     pad["padCCLabel"].setText(_translate("MainWindow", "CC"))
