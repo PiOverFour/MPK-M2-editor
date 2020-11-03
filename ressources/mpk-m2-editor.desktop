@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=MPK-M2-editor
+Comment=Alternative to the official AKAI MPKMini MkII Editor
+Comment[fr]=Alternative à l'éditeur officiel de l'AKAI MPKMini MkII
+Categories=Music;AudioVideo;Audio
+Keywords=music;standalone;
+Exec=mpk-m2-editor
+Icon=mpk-m2-editor
+Terminal=false
