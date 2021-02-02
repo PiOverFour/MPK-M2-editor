@@ -16,6 +16,7 @@ The program is written in Python3 and relies on PyQt5 and python-rtmidi. It was 
 A good way would be to use pip for the dependencies.
 ### Debian-based distributions
 ```
+  # Replace libjack-dev by libjack-jackd2-dev if using jackd2
   apt-get install build-essential python3-dev python3-pip libasound2-dev libjack-dev
   pip3 install -r requirements.txt
 ```
