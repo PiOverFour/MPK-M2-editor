@@ -8,6 +8,6 @@ setup(
     url='https://github.com/PiOverFour/MPK-M2-editor',
     packages=['ui'],
     install_requires=['python-rtmidi', 'pyqt5'],
-    scripts=['mpk-m2-editor.py'],
+    scripts=['mpk-m2-editor'],
     include_package_data=True
 )

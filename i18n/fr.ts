@@ -744,12 +744,12 @@ CC 2 : envoyer un signal CC sur le canal des champs &lt;i&gt;Haut&lt;/i&gt; ou &
 <context>
     <name>popup</name>
     <message>
-        <location filename="../mpk-m2-editor.py" line="232"/>
+        <location filename="../mpk-m2-editor" line="232"/>
         <source>MPK Mini Mk2 Editor</source>
         <translation>Éditeur MPK Mini Mk2</translation>
     </message>
     <message>
-        <location filename="../mpk-m2-editor.py" line="233"/>
+        <location filename="../mpk-m2-editor" line="233"/>
         <source>Controller not found</source>
         <translation>Contrôleur introuvable</translation>
     </message>

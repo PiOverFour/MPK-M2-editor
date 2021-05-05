@@ -37,7 +37,7 @@ You can install Python and pip using homebrew. You may need a recent version of 
 ```
 
 ## Usage
-Connect your controller, then start the editor with ```./mpk-m2-editor.py```
+Connect your controller, then start the editor with ```./mpk-m2-editor```
 If you're familiar with the official editor, you should find it's similar, except that programs are grouped in tabs at the top of the window. You can send an individual program or all of them at once. Some fields have tooltips, don't hesitate to hover them.
 
 You can use the scrollwheel to modify any value. If you use it with `CTRL`, the values will change by increments of 10.
