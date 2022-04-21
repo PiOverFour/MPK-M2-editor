@@ -168,7 +168,7 @@ class Ui_MainWindow(object):
                 knob["knobCCLabel"].setObjectName("knobCCLabel")
                 knob["knobGridLayout"].addWidget(knob["knobCCLabel"], 0, 0, 1, 1)
 
-                prog["gridLayout_5"].addWidget(knob["knobGroupBox"], knob_i/4+1, knob_i%4, 1, 1)
+                prog["gridLayout_5"].addWidget(knob["knobGroupBox"], knob_i//4, knob_i%4, 1, 1)
                 prog["knobs"].append(knob)
             prog["gridLayout_2"].addWidget(prog["knobsGroupBox"], 0, 1, 1, 1)
 
