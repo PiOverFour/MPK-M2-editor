@@ -58,7 +58,7 @@ from functools import partial
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        # MainWindow.resize(1032, 764)
+        MainWindow.resize(1150, 900)
         MainWindow.setStyleSheet("""
           * {
              font: 9pt;
@@ -67,54 +67,54 @@ class Ui_MainWindow(object):
             padding: 2px;
             padding-top: 20px;
           }""")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+        self.scrollContainer = QtWidgets.QWidget()
+        self.gridLayout = QtWidgets.QGridLayout(self.scrollContainer)
         self.gridLayout.setContentsMargins(-1, -1, -1, 0)
         self.gridLayout.setObjectName("gridLayout")
+
         self.options = QtWidgets.QGridLayout()
         self.options.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
         self.options.setContentsMargins(1, 5, 5, 5)
         self.options.setObjectName("options")
 
-        self.getCurrentPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.getCurrentPushButton = QtWidgets.QPushButton(self.scrollContainer)
         self.getCurrentPushButton.setObjectName("getCurrentPushButton")
         self.getCurrentPushButton.clicked.connect(self.get_active_programme)
         self.options.addWidget(self.getCurrentPushButton, 0, 0, 1, 1)
 
-        self.sendCurrentPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.sendCurrentPushButton = QtWidgets.QPushButton(self.scrollContainer)
         self.sendCurrentPushButton.setObjectName("sendCurrentPushButton")
         self.sendCurrentPushButton.clicked.connect(self.send_active_programme)
         self.options.addWidget(self.sendCurrentPushButton, 1, 0, 1, 1)
 
-        self.getAllPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.getAllPushButton = QtWidgets.QPushButton(self.scrollContainer)
         self.getAllPushButton.setObjectName("getAllPushButton")
         self.getAllPushButton.clicked.connect(self.get_all_programmes)
         self.options.addWidget(self.getAllPushButton, 0, 1, 1, 1)
 
-        self.sendAllPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.sendAllPushButton = QtWidgets.QPushButton(self.scrollContainer)
         self.sendAllPushButton.setObjectName("sendAllPushButton")
         self.sendAllPushButton.clicked.connect(self.send_all_programmes)
         self.options.addWidget(self.sendAllPushButton, 1, 1, 1, 1)
 
-        # self.liveUpdateCheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        # self.liveUpdateCheckBox = QtWidgets.QCheckBox(self.scrollContainer)
         # self.liveUpdateCheckBox.setObjectName("liveUpdateCheckBox")
         # self.liveUpdateCheckBox.setEnabled(False)
         # self.options.addWidget(self.liveUpdateCheckBox, 0, 2, 1, 1)
 
-        self.getRAMPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.getRAMPushButton = QtWidgets.QPushButton(self.scrollContainer)
         self.getRAMPushButton.setObjectName("getRAMPushButton")
         self.getRAMPushButton.clicked.connect(self.get_RAM)
         self.options.addWidget(self.getRAMPushButton, 0, 2, 1, 1)
 
-        self.sendRAMPushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.sendRAMPushButton = QtWidgets.QPushButton(self.scrollContainer)
         self.sendRAMPushButton.setObjectName("sendRAMPushButton")
         self.sendRAMPushButton.clicked.connect(self.send_RAM)
         self.options.addWidget(self.sendRAMPushButton, 1, 2, 1, 1)
 
         self.gridLayout.addLayout(self.options, 1, 0, 1, 1)
 
-        self.programmes = QtWidgets.QTabWidget(self.centralwidget)
+        self.programmes = QtWidgets.QTabWidget(self.scrollContainer)
         self.programmes.setEnabled(True)
         self.programmes.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.programmes.setObjectName("programmes")
@@ -514,7 +514,11 @@ class Ui_MainWindow(object):
             self.progs.append(prog)
 
         self.gridLayout.addWidget(self.programmes, 0, 0, 1, 1)
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.scrollArea = QtWidgets.QScrollArea()
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setWidget(self.scrollContainer)
+        MainWindow.setCentralWidget(self.scrollArea)
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1032, 18))
         self.menubar.setObjectName("menubar")
