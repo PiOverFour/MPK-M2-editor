@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# MPK M2-editor
-# Copyright (C) 2017  Damien Picard dam.pic AT free.fr
+# MPK-M2-editor
+# Copyright (C) 2017-2022  Damien Picard dam.pic AT free.fr
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,33 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# TODO
-## get programmes
-## send programmes
-##     single
-##     all
-# get ram
-## send ram
-## interface
-##     tabs for progs
-##     autofill
-## load/save config
-#     single program
-#     multi  programs
-##     .mk2
-#     mk1
-#     human readable
-# live update
-# factory reset
-# package
-# PyPI?
-
 import sys
 import os
 import rtmidi
 import time
 from collections import OrderedDict
-from pprint import pprint
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
