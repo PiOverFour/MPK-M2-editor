@@ -16,17 +16,17 @@
     <message>
         <location filename="../ui/qt_ui.py" line="684"/>
         <source>Get current</source>
-        <translation type="unfinished">Recevoir courant</translation>
+        <translation>Recevoir actuel</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="686"/>
         <source>Send current</source>
-        <translation type="unfinished">Envoyer courant</translation>
+        <translation>Envoyer actuel</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="688"/>
         <source>Send all</source>
-        <translation type="unfinished">Envoyer tout</translation>
+        <translation>Envoyer tout</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="692"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../ui/qt_ui.py" line="712"/>
         <source>Pitchbend</source>
-        <translation type="unfinished">Hauteur</translation>
+        <translation>Hauteur</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="713"/>
@@ -121,47 +121,47 @@
     <message>
         <location filename="../ui/qt_ui.py" line="720"/>
         <source>Time div</source>
-        <translation type="unfinished">Div temps</translation>
+        <translation>Div temps</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="721"/>
         <source>1/4</source>
-        <translation type="unfinished"></translation>
+        <translation>1/4</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="722"/>
         <source>1/4T</source>
-        <translation type="unfinished"></translation>
+        <translation>1/4T</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="723"/>
         <source>1/8</source>
-        <translation type="unfinished"></translation>
+        <translation>1/8</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="724"/>
         <source>1/8T</source>
-        <translation type="unfinished"></translation>
+        <translation>1/8T</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="725"/>
         <source>1/16</source>
-        <translation type="unfinished"></translation>
+        <translation>1/16</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="726"/>
         <source>1/16T</source>
-        <translation type="unfinished"></translation>
+        <translation>1/16T</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="727"/>
         <source>1/32</source>
-        <translation type="unfinished"></translation>
+        <translation>1/32</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="728"/>
         <source>1/32T</source>
-        <translation type="unfinished"></translation>
+        <translation>1/32T</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="730"/>
@@ -171,32 +171,32 @@
     <message>
         <location filename="../ui/qt_ui.py" line="731"/>
         <source>50%</source>
-        <translation type="unfinished"></translation>
+        <translation>50%</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="732"/>
         <source>55%</source>
-        <translation type="unfinished"></translation>
+        <translation>55%</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="733"/>
         <source>57%</source>
-        <translation type="unfinished"></translation>
+        <translation>57%</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="734"/>
         <source>59%</source>
-        <translation type="unfinished"></translation>
+        <translation>59%</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="735"/>
         <source>61%</source>
-        <translation type="unfinished"></translation>
+        <translation>61%</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="736"/>
         <source>64%</source>
-        <translation type="unfinished"></translation>
+        <translation>64%</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="761"/>
@@ -211,57 +211,57 @@
     <message>
         <location filename="../ui/qt_ui.py" line="740"/>
         <source>UP</source>
-        <translation type="unfinished">HAUT</translation>
+        <translation>HAUT</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="741"/>
         <source>DOWN</source>
-        <translation type="unfinished">BAS</translation>
+        <translation>BAS</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="742"/>
         <source>EXCLUSIVE</source>
-        <translation type="unfinished">EXCLUSIF</translation>
+        <translation>EXCLUSIF</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="743"/>
         <source>INCLUSIVE</source>
-        <translation type="unfinished">INCLUSIF</translation>
+        <translation>INCLUSIF</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="744"/>
         <source>ORDER</source>
-        <translation type="unfinished">ORDRE</translation>
+        <translation>ORDRE</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="745"/>
         <source>RANDOM</source>
-        <translation type="unfinished">ALÉATOIRE</translation>
+        <translation>ALÉATOIRE</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="747"/>
         <source>Tempo taps</source>
-        <translation type="unfinished">Tapes tempo</translation>
+        <translation>Tapes tempo</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="748"/>
         <source>Clock</source>
-        <translation type="unfinished">Horloge</translation>
+        <translation>Horloge</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="749"/>
         <source>Internal</source>
-        <translation type="unfinished">Interne</translation>
+        <translation>Interne</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="750"/>
         <source>External</source>
-        <translation type="unfinished">Externe</translation>
+        <translation>Externe</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="752"/>
         <source>Latch</source>
-        <translation type="unfinished">Enclencher</translation>
+        <translation>Enclencher</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="754"/>
@@ -276,12 +276,12 @@
     <message>
         <location filename="../ui/qt_ui.py" line="757"/>
         <source>Pad</source>
-        <translation type="unfinished">Pad</translation>
+        <translation>Pad</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="758"/>
         <source>Keys/CC</source>
-        <translation type="unfinished">Touches/CC</translation>
+        <translation>Touches/CC</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="759"/>
@@ -296,12 +296,12 @@
     <message>
         <location filename="../ui/qt_ui.py" line="768"/>
         <source>Momentary</source>
-        <translation type="unfinished">Momentané</translation>
+        <translation>Momentané</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="769"/>
         <source>Toggle</source>
-        <translation type="unfinished">Bascule</translation>
+        <translation>Bascule</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="770"/>
@@ -391,12 +391,12 @@
     <message>
         <location filename="../ui/qt_ui.py" line="695"/>
         <source>Send current tab to the controller, without overwriting any programme</source>
-        <translation>Envoyer l’onglet actuel au contrôleur, sans effacer aucun programme</translation>
+        <translation>Envoyer l’onglet actuel au contrôleur, sans remplacer aucun programme</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="729"/>
         <source>Arpeggiator time signature</source>
-        <translation type="unfinished">Mesure de l’arpégiateur</translation>
+        <translation>Mesure de l’arpégiateur</translation>
     </message>
     <message>
         <location filename="../ui/qt_ui.py" line="737"/>
@@ -469,7 +469,7 @@
 Pitchbend: send bend signal
 CC 1: send CC signal on channel from &lt;i&gt;Left&lt;/i&gt; field
 CC 2: send CC signal on channels from either &lt;i&gt;Left&lt;/i&gt; or &lt;i&gt;Right&lt;/i&gt; field</source>
-        <translation type="unfinished">Comportement sur l’axe X
+        <translation>Comportement sur l’axe X
 Hauteur: envoyer un signal de bend
 CC 1 : envoyer un signal CC sur le canal du champ &lt;i&gt;Gauche&lt;/i&gt;
 CC 2 : envoyer un signal CC sur le canal des champs &lt;i&gt;Gauche&lt;/i&gt; ou &lt;i&gt;Droite&lt;/i&gt;</translation>
@@ -480,7 +480,7 @@ CC 2 : envoyer un signal CC sur le canal des champs &lt;i&gt;Gauche&lt;/i&gt; ou
 Pitchbend: send bend signal
 CC 1: send CC signal on channel from &lt;i&gt;Up&lt;/i&gt; field 
 CC 2: send CC signal on channels from either &lt;i&gt;Up&lt;/i&gt; or &lt;i&gt;Down&lt;/i&gt; field</source>
-        <translation type="unfinished">Comportement sur l’axe Y
+        <translation>Comportement sur l’axe Y
 Hauteur: envoyer un signal de bend
 CC 1 : envoyer un signal CC sur le canal du champ &lt;i&gt;Haut&lt;/i&gt;
 CC 2 : envoyer un signal CC sur le canal des champs &lt;i&gt;Haut&lt;/i&gt; ou &lt;i&gt;Bas&lt;/i&gt;</translation>
@@ -681,7 +681,7 @@ CC 2 : envoyer un signal CC sur le canal des champs &lt;i&gt;Haut&lt;/i&gt; ou &
     <message>
         <location filename="../ui/autoFill.py" line="327"/>
         <source>  Apply to...</source>
-        <translation>Appliquer à...</translation>
+        <translation>  Appliquer à...</translation>
     </message>
     <message>
         <location filename="../ui/autoFill.py" line="330"/>
